@@ -5,7 +5,7 @@ export default function Projects() {
     <section className="section wrap" id="work">
       <div className="section-head reveal">
         <span className="section-num">02</span>
-        <h2>Proyectos seleccionados</h2>
+        <h2>Selected projects</h2>
       </div>
 
       <div className="proj">

@@ -7,7 +7,7 @@ import Awards from './components/Awards.jsx'
 import Footer from './components/Footer.jsx'
 
 export default function App() {
-  // Revela los elementos .reveal al hacer scroll
+  // Reveals .reveal elements on scroll
   useEffect(() => {
     const els = document.querySelectorAll('.reveal')
     const io = new IntersectionObserver(
@@ -30,10 +30,10 @@ export default function App() {
       <div className="topbar">
         <a className="mark" href="#top">RFG</a>
         <nav>
-          <a href="#about">Sobre mí</a>
-          <a href="#work">Proyectos</a>
-          <a href="#awards">Premios</a>
-          <a href="#contact">Contacto</a>
+          <a href="#about">About</a>
+          <a href="#work">Projects</a>
+          <a href="#awards">Awards</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
 

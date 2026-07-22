@@ -6,7 +6,6 @@ export default function Hero() {
       <div className="hero-meta reveal">
         <span>Portfolio / <b>2026</b></span>
         <span>Based in <b>{profile.location}</b></span>
-        <span>Status / <b>Open to work</b></span>
       </div>
 
       <h1 className="reveal">
@@ -14,7 +13,7 @@ export default function Hero() {
         <span className="accent">{profile.focus}</span>
       </h1>
 
-      {/* Línea de cota: el elemento firma, guiño al dibujo técnico */}
+      {/* Dimension line: signature element, a nod to technical drawing */}
       <div className="dimline reveal" aria-hidden="true">
         <span className="tick" />
         <span className="rule" />
@@ -26,7 +25,7 @@ export default function Hero() {
       <p className="intro reveal">{profile.intro}</p>
 
       <div className="hero-actions reveal">
-        <a className="btn btn-primary" href="#work">Ver proyectos</a>
+        <a className="btn btn-primary" href="#work">View projects</a>
         <a className="btn" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
       </div>
     </header>

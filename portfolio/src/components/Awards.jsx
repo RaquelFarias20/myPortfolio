@@ -5,7 +5,7 @@ export default function Awards() {
     <section className="section wrap" id="awards">
       <div className="section-head reveal">
         <span className="section-num">03</span>
-        <h2>Premios y reconocimientos</h2>
+        <h2>Awards & Recognition</h2>
       </div>
 
       <div className="spec">

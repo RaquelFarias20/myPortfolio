@@ -1,19 +1,19 @@
 /* ═══════════════════════════════════════════════════════════════
-   SISTEMA DE DISEÑO
-   Concepto: lenguaje del dibujo técnico industrial.
-   Retícula precisa, líneas de cota, anotaciones monoespaciadas.
+   DESIGN SYSTEM
+   Concept: industrial technical drawing language.
+   Precise grid, dimension lines, monospaced annotations.
    ─────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Paleta */
-  --paper:   #ECEAE3;  /* fondo, papel cálido */
-  --paper-2: #E3E0D7;  /* bloques alternos */
-  --ink:     #16150F;  /* texto principal, casi negro cálido */
-  --muted:   #6A685E;  /* texto secundario */
-  --line:    #C7C4B8;  /* hairlines / cotas */
-  --accent:  #2E2EDB;  /* azul plano técnico, usar con moderación */
+  /* Palette */
+  --paper:   #ECEAE3;  /* background, warm paper */
+  --paper-2: #E3E0D7;  /* alternate blocks */
+  --ink:     #16150F;  /* main text, almost warm black */
+  --muted:   #6A685E;  /* secondary text */
+  --line:    #C7C4B8;  /* hairlines / dimensions */
+  --accent:  #2E2EDB;  /* flat technical blue, use sparingly */
 
-  /* Tipografía */
+  /* Typography */
   --display: 'Space Grotesk', system-ui, sans-serif;
   --body:    'IBM Plex Sans', system-ui, sans-serif;
   --mono:    'Space Mono', ui-monospace, monospace;
@@ -108,7 +108,7 @@ a:focus-visible, button:focus-visible {
 }
 .hero h1 .accent { color: var(--accent); }
 
-/* Línea de cota bajo el nombre — el elemento firma */
+/* Dimension line under the name — signature element */
 .dimline {
   margin: 26px 0 30px;
   display: flex; align-items: center; gap: 0;
@@ -173,7 +173,7 @@ a:focus-visible, button:focus-visible {
   .proj-row .yr { grid-column: 2; text-align: left; margin-top: 6px; }
 }
 
-/* ── Awards (hoja técnica) ──────────────────────────────────── */
+/* ── Awards (technical sheet) ──────────────────────────────────── */
 .spec { border-top: 1px solid var(--ink); }
 .spec-row {
   display: grid; grid-template-columns: 80px 1fr; gap: 24px;
@@ -216,7 +216,7 @@ a:focus-visible, button:focus-visible {
   font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
 }
 
-/* ── Animación de entrada ───────────────────────────────────── */
+/* ── Entrance animation ───────────────────────────────────── */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 

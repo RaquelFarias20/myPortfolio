@@ -3,10 +3,10 @@ import { profile } from '../data.js'
 export default function Footer() {
   return (
     <footer className="footer wrap" id="contact">
-      <span className="eyebrow reveal">04 — Contacto</span>
+      <span className="eyebrow reveal">04 — Contact</span>
       <h2 className="reveal" style={{ marginTop: '20px' }}>
-        ¿Trabajamos<br />
-        <a href={`mailto:${profile.email}`}>juntas?</a>
+        Let's work<br />
+        <a href={`mailto:${profile.email}`}>together?</a>
       </h2>
 
       <div className="footer-links reveal">
@@ -16,7 +16,7 @@ export default function Footer() {
 
       <div className="footer-base">
         <span>© {new Date().getFullYear()} {profile.name}</span>
-        <span>Hecho con React — desplegado en Vercel</span>
+        <span>Built with React — deployed on Vercel</span>
       </div>
     </footer>
   )

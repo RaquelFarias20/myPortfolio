@@ -1,51 +1,51 @@
 // ─────────────────────────────────────────────────────────────
-//  CONTENIDO DEL PORTAFOLIO
-//  Edita este archivo para cambiar textos, premios y proyectos.
-//  No necesitas tocar el diseño para actualizar tu información.
+//  PORTFOLIO CONTENT
+//  Edit this file to change text, awards, and projects.
+//  You don't need to touch the design to update your information.
 // ─────────────────────────────────────────────────────────────
 
 export const profile = {
   name: 'Raquel Farías García',
   role: 'Industrial Designer',
   focus: 'UX/UI & Product Design',
-  // Cambia esta línea por una frase tuya. Dos o tres líneas máximo.
+  // Replace this line with your own sentence. Two or three lines max.
   intro:
-    'Diseñadora industrial enfocada en producto y experiencia. Trabajo en la intersección entre la forma, la función y los datos — del taller al prototipo digital.',
+    'Industrial designer focused on product and experience. I work at the intersection of form, function, and data — from the workshop to the digital prototype.',
   location: 'New York, NY',
-  email: 'tu-correo@ejemplo.com', // ← reemplaza por tu correo real
+  email: 'your-email@example.com', // ← replace with your real email
   linkedin: 'https://www.linkedin.com/in/raquelfariasgarcia/',
 }
 
-// Tus proyectos. Empieza con unos pocos reales y bien contados;
-// es mejor 4 proyectos sólidos que 12 vacíos.
+// Your projects. Start with a few real, well-told ones;
+// 4 solid projects are better than 12 empty ones.
 export const projects = [
   {
     id: '01',
-    title: 'Nombre del proyecto',
+    title: 'Project name',
     category: 'UX / Product',
     year: '2025',
     summary:
-      'Una línea sobre el problema y tu rol. Reemplaza con un caso real: qué resolviste y el resultado.',
+      'One line about the problem and your role. Replace with a real case: what you solved and the outcome.',
   },
   {
     id: '02',
-    title: 'Nombre del proyecto',
+    title: 'Project name',
     category: 'Industrial Design',
     year: '2024',
     summary:
-      'Una línea sobre el problema y tu rol. Reemplaza con un caso real: qué resolviste y el resultado.',
+      'One line about the problem and your role. Replace with a real case: what you solved and the outcome.',
   },
   {
     id: '03',
-    title: 'Nombre del proyecto',
+    title: 'Project name',
     category: 'Research',
     year: '2024',
     summary:
-      'Una línea sobre el problema y tu rol. Reemplaza con un caso real: qué resolviste y el resultado.',
+      'One line about the problem and your role. Replace with a real case: what you solved and the outcome.',
   },
 ]
 
-// Premios y reconocimientos — tomados de tu sitio actual.
+// Awards and recognition — taken from your current site.
 export const awards = [
   {
     year: '2026',
@@ -56,45 +56,45 @@ export const awards = [
     year: '2025',
     title: 'Distinguished Scholars Award — New York University',
     detail:
-      'Beca por mérito (2025–2026) en reconocimiento a la excelencia académica y profesional.',
+      'Merit scholarship (2025–2026) in recognition of academic and professional excellence.',
   },
   {
     year: '2025',
     title: 'Salesforce Hackathon — NYU',
     detail:
-      'Participante y ponente. Soluciones con IA generativa para mejorar la experiencia estudiantil. 1 de 16 seleccionados de más de 80 aplicantes.',
+      'Participant and speaker. Generative AI solutions to improve the student experience. 1 of 16 selected out of more than 80 applicants.',
   },
   {
     year: '2025',
     title: 'Solomon R. Guggenheim Museum Thinkathon — New York',
     detail:
-      'Participante y ponente. Optimización de recolección de datos y engagement de audiencias.',
+      'Participant and speaker. Optimization of data collection and audience engagement.',
   },
   {
     year: '2024',
     title: 'International Congress on Sustainable Development and Energy Transition',
     detail:
-      'Ponencia: estrategias bioclimáticas sostenibles para confort higrotérmico y mitigación del cambio climático en la Península de Yucatán.',
+      'Talk: sustainable bioclimatic strategies for hygrothermal comfort and climate change mitigation in the Yucatán Peninsula.',
   },
   {
     year: '2021',
     title: 'Universidad Autónoma Metropolitana — B.S. in Industrial Design',
-    detail: 'Graduada dentro del 10% superior de la generación.',
+    detail: 'Graduated in the top 10% of the class.',
   },
   {
     year: '2021',
-    title: 'Extreme Lodge Award Competition — 3.er lugar internacional',
+    title: 'Extreme Lodge Award Competition — 3rd place international',
     detail:
-      'Diseño de un refugio que conserva las condiciones térmicas internas en climas extremos.',
+      'Design of a shelter that maintains internal thermal conditions in extreme climates.',
   },
   {
     year: '2020',
-    title: "L'Oréal Top Innovation Contest — Top 25 nacional",
+    title: "L'Oréal Top Innovation Contest — National Top 25",
     detail:
-      'Diseño de una línea de producción de tintes capilares con meta de 75% de eficiencia.',
+      'Design of a hair dye production line with a 75% efficiency target.',
   },
 ]
 
 export const certifications = [
-  { year: '2026', title: 'Project Management Professional (PMP)', status: 'En curso' },
+  { year: '2026', title: 'Project Management Professional (PMP)', status: 'In progress' },
 ]

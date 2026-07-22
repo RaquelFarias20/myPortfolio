@@ -3,29 +3,29 @@ export default function About() {
     <section className="section wrap" id="about">
       <div className="section-head reveal">
         <span className="section-num">01</span>
-        <h2>Sobre mí</h2>
+        <h2>About me</h2>
       </div>
       <div className="about-grid">
         <div className="reveal">
           <p>
-            Soy diseñadora industrial de formación, con una maestría en Management
-            and Analytics por NYU. Me muevo entre el diseño de producto físico, la
-            experiencia de usuario y el análisis de datos.
+            I'm an industrial designer by training, with a master's degree in
+            Management and Analytics from NYU. I move between physical product
+            design, user experience, and data analysis.
           </p>
           <p>
-            Reemplaza este texto por tu historia real: cómo llegaste al diseño, qué
-            tipo de problemas te interesan y cómo trabajas. Habla en primera persona
-            y mantenlo concreto.
+            Replace this text with your real story: how you got into design, what
+            kind of problems interest you, and how you work. Speak in first person
+            and keep it concrete.
           </p>
         </div>
         <div className="reveal">
           <p>
-            Mi enfoque parte de una idea simple: menos, pero mejor. Entender bien el
-            problema antes de proponer la forma.
+            My approach starts from a simple idea: less, but better. Understanding
+            the problem well before proposing the form.
           </p>
           <p>
-            Aquí puedes mencionar tus herramientas, metodologías o el tipo de
-            colaboración que buscas. Una o dos frases bastan.
+            Here you can mention your tools, methodologies, or the kind of
+            collaboration you're looking for. One or two sentences are enough.
           </p>
         </div>
       </div>
