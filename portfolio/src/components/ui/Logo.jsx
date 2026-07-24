@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
+
 export default function Logo() {
   return (
-    <a href="/" className="logo" aria-label="Raquel Farías — home">
+    <Link to="/" className="logo" aria-label="Raquel Farías — home">
       RF<span>.</span>G
-    </a>
+    </Link>
   )
 }

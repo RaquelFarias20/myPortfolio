@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { navItem } from '../../animations/variants.js'
 
-export default function NavBlock({ id, value, label }) {
+const MotionLink = motion(Link)
+
+export default function NavBlock({ value, label, href }) {
   return (
-    <motion.a className="stat" href={`#${id}`} variants={navItem}>
+    <MotionLink className="stat" to={href} variants={navItem}>
       <div className="num">{value}</div>
       <div className="label">{label}</div>
-    </motion.a>
+    </MotionLink>
   )
 }

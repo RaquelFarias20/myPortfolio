@@ -290,7 +290,7 @@ export default function PlayBox() {
 
   return (
     <div className="portrait-frame">
-      <div className="play-box" ref={boxRef} id="playBox">
+      <div className="play-box" ref={boxRef} id="playBox" data-no-cursor>
         <span className="play-hint">Drag the blocks</span>
       </div>
     </div>

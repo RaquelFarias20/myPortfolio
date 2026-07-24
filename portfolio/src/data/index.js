@@ -1,3 +1,5 @@
-export { profile } from './profile.js'
-export { navBlocks } from './navBlocks.js'
-export { playBoxConfig } from './playBoxConfig.js'
+export { profile }                       from './profile.js'
+export { navBlocks }                     from './navBlocks.js'
+export { playBoxConfig }                 from './playBoxConfig.js'
+export { projects, projectsByCategory }  from './projects.js'
+export { categories }                    from './categories.js'

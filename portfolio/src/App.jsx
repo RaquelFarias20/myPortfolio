@@ -1,21 +1,19 @@
-import Header from './components/layout/Header.jsx'
-import Hero from './components/sections/Hero.jsx'
-import NavBlocks from './components/sections/NavBlocks.jsx'
+import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage.jsx'
+import ProjectsPage from './pages/ProjectsPage.jsx'
+import CustomCursor from './components/ui/CustomCursor.jsx'
+import { useLenis } from './hooks/useLenis.js'
 
 export default function App() {
+  useLenis()
+
   return (
     <>
-      <Header />
-      <main className="wrap">
-        <Hero />
-        <NavBlocks />
-      </main>
-      {/* Anchor targets — sections not yet designed */}
-      <section id="about"        style={{ scrollMarginTop: '80px' }} />
-      <section id="projects"     style={{ scrollMarginTop: '80px' }} />
-      <section id="illustration" style={{ scrollMarginTop: '80px' }} />
-      <section id="photography"  style={{ scrollMarginTop: '80px' }} />
-      <section id="contact"      style={{ scrollMarginTop: '80px' }} />
+      <CustomCursor />
+      <Routes>
+        <Route path="/"         element={<HomePage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+      </Routes>
     </>
   )
 }
