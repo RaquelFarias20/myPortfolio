@@ -351,8 +351,8 @@ header {
   gap: 24px;
   padding: 28px;
   max-width: 760px;
-  margin: 0 auto 16px;
-  border: 1px solid transparent;
+  margin: 0 auto 36px;
+  border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--bg);
   transition: background 0.18s ease, border-color 0.18s ease;
@@ -409,6 +409,10 @@ header {
   font-size: 1.03rem;
   color: var(--ink-soft);
   line-height: 1.6;
+}
+
+@media (max-width: 719px) {
+  .desc { display: none; }
 }
 
 /* ── Tags ── */
