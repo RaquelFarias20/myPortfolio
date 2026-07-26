@@ -55,6 +55,7 @@ export default function PlayBox() {
         vY:       0,
         gone:     false,
         dragging: false,
+        settled:  false,   // false = spawn physics; true = gentle jelly physics
         _t1:      null,
         _t2:      null,
       }
@@ -68,29 +69,39 @@ export default function PlayBox() {
       for (const b of blocks) {
         if (b.gone || b.dragging) continue
 
-        b.vY += CFG.gravity
+        // Pick physics set: spawn (fast+bouncy) or settled (subtle jelly)
+        const gravity  = b.settled ? CFG.gravity      : CFG.gravitySpawn
+        const bounce   = b.settled ? CFG.bounce       : CFG.bounceSpawn
+        const friction = b.settled ? CFG.friction     : CFG.frictionSpawn
+        const sleep    = b.settled ? CFG.sleep        : CFG.sleepSpawn
+
+        b.vY += gravity
         b.x  += b.vX
         b.y  += b.vY
 
         // Floor
         if (b.y + SIZE >= H) {
           b.y = H - SIZE
-          if (Math.abs(b.vY) < CFG.sleep * 3) b.vY = 0
-          else b.vY = -b.vY * CFG.bounce
-          b.vX *= CFG.friction
+          if (Math.abs(b.vY) < sleep * 3) {
+            b.vY      = 0
+            b.settled = true   // first rest → switch to gentle physics forever
+          } else {
+            b.vY = -b.vY * bounce
+          }
+          b.vX *= friction
         }
         // Ceiling
-        if (b.y < 0) { b.y = 0; b.vY = Math.abs(b.vY) * CFG.bounce }
+        if (b.y < 0) { b.y = 0; b.vY = Math.abs(b.vY) * bounce }
         // Left wall
-        if (b.x < 0) { b.x = 0; b.vX = Math.abs(b.vX) * CFG.bounce }
+        if (b.x < 0) { b.x = 0; b.vX = Math.abs(b.vX) * bounce }
         // Right wall
-        if (b.x + SIZE > W) { b.x = W - SIZE; b.vX = -Math.abs(b.vX) * CFG.bounce }
+        if (b.x + SIZE > W) { b.x = W - SIZE; b.vX = -Math.abs(b.vX) * bounce }
         // Zero micro-drift
-        if (Math.abs(b.vX) < CFG.sleep * 0.3) b.vX = 0
+        if (Math.abs(b.vX) < sleep * 0.3) b.vX = 0
       }
 
-      // Collision — 2 passes required to prevent jitter in resting stacks
-      for (let pass = 0; pass < 2; pass++) {
+      // Collision — 4 passes for reliable overlap resolution with fast spawn gravity
+      for (let pass = 0; pass < 4; pass++) {
         for (let i = 0; i < blocks.length - 1; i++) {
           for (let j = i + 1; j < blocks.length; j++) {
             const a = blocks[i], b = blocks[j]
@@ -111,8 +122,30 @@ export default function PlayBox() {
               // Vertical resolution
               const push = (oy / 2) * Math.sign(dy)
               a.y += push; b.y -= push
-              if (a.y > b.y) { a.vY = 0; b.vY *= 0.25 }
-              else            { b.vY = 0; a.vY *= 0.25 }
+
+              if (a.y > b.y) {
+                // b is visually above a
+                if (b.settled) {
+                  // settled stack: original heavy damping
+                  if (b.vY > a.vY) b.vY *= 0.25
+                  if (a.vY < 0) a.vY = 0
+                } else {
+                  // b still falling: bounce it off a so it can't re-penetrate
+                  const relV = b.vY - a.vY
+                  if (relV > 0) b.vY = a.vY - CFG.bounceSpawn * relV
+                  if (a.settled && a.vY < 0) a.vY = 0
+                }
+              } else {
+                // a is visually above b
+                if (a.settled) {
+                  if (a.vY > b.vY) a.vY *= 0.25
+                  if (b.vY < 0) b.vY = 0
+                } else {
+                  const relV = a.vY - b.vY
+                  if (relV > 0) a.vY = b.vY - CFG.bounceSpawn * relV
+                  if (b.settled && b.vY < 0) b.vY = 0
+                }
+              }
             }
 
             // Clamp after each resolution
