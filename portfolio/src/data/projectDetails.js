@@ -209,7 +209,11 @@ export const projectDetails = {
           "Open-source readiness documentation.",
         ],
       },
-      { type: "pdf", label: "Sample Assessment Report — PDF coming soon" },
+      {
+        type: "pdf",
+        src: "/pdfs/un-ai-safety-report.pdf",
+        label: "Sample Assessment Report",
+      },
       {
         type: "paragraph",
         content: "<strong>Partially complete:</strong>",

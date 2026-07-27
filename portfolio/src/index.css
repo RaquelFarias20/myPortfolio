@@ -57,9 +57,10 @@ html {
     cursor: none;
   }
 
-  /* Restore native cursor inside the play-box */
-  [data-no-cursor] {
-    cursor: default;
+  /* Restore native cursor for zones where JS can't track the mouse (iframes, play-box) */
+  [data-no-cursor],
+  [data-no-cursor] * {
+    cursor: default !important;
   }
 
   .custom-cursor {
@@ -706,6 +707,11 @@ header {
 }
 
 /* ── Media placeholder ── */
+.pdf-placeholder-wrap,
+.pdf-viewer {
+  margin: 4px 0 28px;
+}
+
 .pdf-placeholder {
   width: 100%;
   min-height: 180px;
@@ -716,18 +722,10 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin: 4px 0 28px;
   color: var(--ink-soft);
 }
 .pdf-placeholder__icon {
   opacity: 0.4;
-}
-.pdf-placeholder span {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.5;
 }
 
 .pdf-viewer {
@@ -736,13 +734,21 @@ header {
   border: 1px solid var(--line);
   border-radius: 8px;
   overflow: hidden;
-  margin: 4px 0 28px;
 }
 .pdf-viewer iframe {
   width: 100%;
   height: 100%;
   border: none;
   display: block;
+}
+
+.pdf-placeholder-wrap figcaption,
+.pdf-viewer figcaption {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 10px 0 4px;
+  letter-spacing: 0.04em;
 }
 
 .video-placeholder {

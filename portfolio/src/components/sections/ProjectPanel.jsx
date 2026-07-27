@@ -23,23 +23,26 @@ function renderBlock(block, index) {
     case 'pdf':
       return block.src
         ? (
-          <div key={index} className="pdf-viewer">
-            <iframe src={block.src} title={block.title ?? 'PDF document'} />
-          </div>
+          <figure key={index} className="pdf-viewer" data-no-cursor>
+            <iframe src={`${block.src}#zoom=60`} title={block.label ?? 'PDF document'} />
+            {block.label && <figcaption>{block.label}</figcaption>}
+          </figure>
         )
         : (
-          <div key={index} className="pdf-placeholder">
-            <div className="pdf-placeholder__icon" aria-hidden="true">
-              <svg width="28" height="32" viewBox="0 0 28 32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 1h14l9 9v21H4V1z" />
-                <path d="M18 1v9h9" />
-                <line x1="8" y1="16" x2="20" y2="16" />
-                <line x1="8" y1="21" x2="20" y2="21" />
-                <line x1="8" y1="26" x2="14" y2="26" />
-              </svg>
+          <figure key={index} className="pdf-placeholder-wrap">
+            <div className="pdf-placeholder">
+              <div className="pdf-placeholder__icon" aria-hidden="true">
+                <svg width="28" height="32" viewBox="0 0 28 32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 1h14l9 9v21H4V1z" />
+                  <path d="M18 1v9h9" />
+                  <line x1="8" y1="16" x2="20" y2="16" />
+                  <line x1="8" y1="21" x2="20" y2="21" />
+                  <line x1="8" y1="26" x2="14" y2="26" />
+                </svg>
+              </div>
             </div>
-            <span>{block.label ?? 'PDF coming soon'}</span>
-          </div>
+            {block.label && <figcaption>{block.label}</figcaption>}
+          </figure>
         )
 
     case 'video':
