@@ -6,6 +6,9 @@ function renderBlock(block, index) {
     case 'heading':
       return <h2 key={index} className="panel-h2">{block.content}</h2>
 
+    case 'statement':
+      return <p key={index} className="panel-statement">{block.content}</p>
+
     case 'paragraph':
       return (
         <p key={index} dangerouslySetInnerHTML={{ __html: block.content }} />

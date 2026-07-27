@@ -263,4 +263,142 @@ export const projectDetails = {
     prev: { id: "bettercampus-analytics", title: "BetterCampus Analytics" },
     next: { id: "nyu-marketplace", title: "Apparel Rental Marketplace" },
   },
+
+  "vous-perfume": {
+    id: "vous-perfume",
+    category: { title: "Product Design", hasDivider: false },
+    title: "Vous",
+    company: "Raquel Farías",
+    role: "Perfume Designer",
+    dateStart: "2019",
+    dateEnd: "2019",
+    tags: ["Packaging Design", "Product Design", "Luxury Retail"],
+
+    body: [
+      // ── Concept statement ───────────────────────────────────
+      {
+        type: "paragraph",
+        content:
+          "This perfume was inspired by the geometry of a sphere framed in a wooden square — showing the simplest of forms but composing a geometrical harmony between its parts. The frame was conceived made of wood because I wanted to represent the scent of the perfume through the texture of its parts; embracing natural materials allows a bigger connection with nature and empowers the scent of it.",
+      },
+
+      // ── Hero image ──────────────────────────────────────────
+      {
+        type: "media",
+        src: "/images/vous-hero.png",
+        alt: "Vous perfume bottle — macro shot on wet stone with golden light",
+        caption: "Vous — Eau de Parfum",
+      },
+
+      // ── The Bottle ──────────────────────────────────────────
+      { type: "heading", content: "The Bottle" },
+      {
+        type: "paragraph",
+        content:
+          "A soda-lime glass sphere framed in a square wooden structure. The frame isn't purely decorative — it acts as structural support and as a visible texture of the scent: the wood communicates warmth and naturalness before the user even perceives the fragrance.",
+      },
+      {
+        type: "list",
+        content: [
+          "Material: soda-lime glass",
+          "Cap: wood, AE15 neck type",
+          "Liquid color: Pantone 13-1125 TCX",
+          "Volume: 100 ml / 3.4 FL.OZ",
+          "Manufacturing: automatic blow-and-blow process",
+        ],
+      },
+
+      // ── The Set image ───────────────────────────────────────
+      {
+        type: "media",
+        src: "/images/vous-set.png",
+        alt: "Vous bottle and case together on wet stone pedestals",
+        caption: "Vous — The Set",
+      },
+
+      // ── The Case ────────────────────────────────────────────
+      { type: "heading", content: "The Case" },
+      {
+        type: "paragraph",
+        content:
+          "Cylindrical telescope paper tube, three pieces, with a black ribbon carrying handle. A dusty pink finish with a red rose motif creates contrast between the warmth of the bottle's wood and the graphic quality of the packaging.",
+      },
+      {
+        type: "list",
+        content: [
+          "Material: painted illustration paper — acrylic paint blended in red, orange, and vanilla to reach the final tone",
+          "Handle: black ribbon",
+          "Surface finish: stamped / Spot UV in production version",
+          "Print: 4-color offset",
+        ],
+      },
+
+      // ── Case drawing ────────────────────────────────────────
+      {
+        type: "media",
+        src: "/images/vous-case-layout.jpg",
+        alt: "Technical layout drawing of the Vous case",
+        caption: "Case — Technical Drawing",
+        maxHeight: "420px",
+      },
+
+      // ── Scent Profile ───────────────────────────────────────
+      { type: "heading", content: "Scent Profile" },
+      {
+        type: "paragraph",
+        content: "Eau de Parfum — Floral",
+      },
+      {
+        type: "list",
+        content: [
+          "<strong>Top notes</strong> — magnolia, green apple, mandarin",
+          "<strong>Heart notes</strong> — white currant, jasmine petals, peony",
+          "<strong>Base notes</strong> — musk, sandalwood, amber wood",
+        ],
+      },
+
+      // ── Closing / reveal image ──────────────────────────────
+      {
+        type: "media",
+        src: "/images/vous-reveal.png",
+        alt: "Open Vous case with lid floating, bottle visible, arched window in background",
+        caption: "Vous — The Ritual",
+      },
+
+      // ── Behind the Design ───────────────────────────────────
+      { type: "heading", content: "Behind the Design" },
+      {
+        type: "paragraph",
+        content:
+          "The secondary packaging was designed to withstand distribution while communicating the same material sensibility as the product itself. A single-wall corrugated kraft box handles retail and transit requirements.",
+      },
+      {
+        type: "list",
+        content: [
+          "Outer box: corrugated cardboard, single-wall double-face, 3 mm, kraft — 47.5 × 38 × 12 cm",
+          "Sales unit: 1 unit (80 / 100 ml)",
+          "12 cases per outer box",
+          "Pallet: 6 boxes per layer, 2 layers — 117 × 95 × 15 cm",
+        ],
+      },
+      {
+        type: "media",
+        src: "/images/vous-box-layout.jpg",
+        alt: "Box layout drawing",
+        caption: "Box — Technical Drawing",
+        maxHeight: "380px",
+      },
+      {
+        type: "media",
+        src: "/images/vous-stacking.jpg",
+        alt: "Pallet stacking diagram",
+        caption: "Stacking Diagram",
+        maxHeight: "360px",
+      },
+    ],
+
+    links: [],
+    prev: { id: "sai-design", title: "Sai Design & Image Consulting" },
+    next: null,
+  },
 };

@@ -659,6 +659,20 @@ header {
   }
 }
 
+.panel-statement {
+  font-family: "Outfit", sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.75;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin-bottom: 28px;
+  max-width: 60ch;
+}
+@media (min-width: 720px) {
+  .panel-statement { font-size: 1.35rem; }
+}
+
 .panel-h2 {
   font-family: "Outfit", sans-serif;
   font-weight: 500;
