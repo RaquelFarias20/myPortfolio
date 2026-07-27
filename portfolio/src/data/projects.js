@@ -15,8 +15,8 @@ export const projects = [
   {
     id: "un-ai-safety",
     category: "analytics-ai",
-    role: "AI UX Product Lead",
-    company: "United Nations ICC — AI Safety Lab",
+    role: "AI Engineer & Platform Lead",
+    company: "United Nations - International Computing Center (ICC)",
     description:
       "Led the winning team designing a zero-to-one AI evaluation platform, translating complex AI-safety workflows into intake flows, review states, and reporting experiences, prototyped with LLM-powered tools and structured JSON/PDF outputs.",
     tags: ["AI", "UX/UI", "Zero-to-One"],
@@ -29,10 +29,10 @@ export const projects = [
   {
     id: "nyu-marketplace",
     category: "product-management",
-    role: "UX Product Strategist",
+    role: "Founding Product Manager",
     company: "NYU Startup Program — Innovation Lab",
     description:
-      "Led a peer-to-peer apparel-rental marketplace from concept to MVP — shaping the business opportunity, running customer and competitive research, and designing end-to-end trust, discovery, and transaction flows.",
+      "Led a peer-to-peer apparel-rental marketplace from concept to MVP,  shaping the business opportunity, running customer and competitive research, and designing end-to-end trust, discovery, and transaction flows.",
     tags: ["UX Strategy", "Marketplace", "MVP"],
     href: "/projects/nyu-marketplace",
     dateStart: "2025-06",
@@ -46,7 +46,7 @@ export const projects = [
     role: "Senior User Experience Designer",
     company: "Ex Squared",
     description:
-      'Owned end-to-end UX for core features of a Customer Delivery System — from research to high-fidelity prototypes and engineering handoff — and as Product Owner for the "Posts" epic drove a 25-point NPS increase and 40% fewer handoff questions.',
+      'Owned end-to-end UX for core features of a Customer Delivery System, from research to high-fidelity prototypes and engineering handoff, and as Product Owner for the "Posts" epic drove a 25-point NPS increase and 40% fewer handoff questions.',
     tags: ["UX/UI", "Product Owner", "Research"],
     href: "/projects/ex-squared-ux",
     dateStart: "2022-09",

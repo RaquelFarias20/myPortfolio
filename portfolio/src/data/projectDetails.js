@@ -316,6 +316,15 @@ export const projectDetails = {
         caption: "Vous — The Set",
       },
 
+      // ── Bottle technical drawing ────────────────────────────
+      {
+        type: "media",
+        src: "/images/vous-general.jpg",
+        alt: "Technical drawing of the Vous perfume bottle — dimensions and views",
+        caption: "Bottle — Technical Drawing",
+        maxHeight: "420px",
+      },
+
       // ── The Case ────────────────────────────────────────────
       { type: "heading", content: "The Case" },
       {
