@@ -83,9 +83,8 @@ export default function ProjectPanel({ body, links }) {
     <motion.div
       className="panel"
       initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.08 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: 'easeOut', delay: 0.1 }}
     >
       {body.map((block, i) => renderBlock(block, i))}
 
