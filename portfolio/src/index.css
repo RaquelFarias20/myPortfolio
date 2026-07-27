@@ -765,6 +765,72 @@ header {
   letter-spacing: 0.04em;
 }
 
+/* ── Embed frame (standalone HTML pages in iframe) ── */
+.embed-frame {
+  margin: 4px 0 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.embed-frame iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  display: block;
+}
+.embed-frame figcaption {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 10px 0 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Process flow chevron ── */
+.process-flow {
+  margin: 0 0 28px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.process-flow__header {
+  background: #0b1c6b;
+  color: #fff;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+}
+.process-flow__steps {
+  display: flex;
+  background: #fff;
+}
+.process-flow__step {
+  flex: 1;
+  min-height: 68px;
+  padding: 10px 20px 10px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #fff;
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%, 13px 50%);
+  margin-left: -13px;
+}
+.process-flow__step:first-child {
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%);
+  margin-left: 0;
+  padding-left: 14px;
+}
+.process-flow__step:last-child {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 13px 50%);
+  padding-right: 14px;
+}
+
 .video-placeholder {
   width: 100%;
   aspect-ratio: 16 / 9;

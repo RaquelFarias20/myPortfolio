@@ -264,6 +264,141 @@ export const projectDetails = {
     next: { id: "nyu-marketplace", title: "Apparel Rental Marketplace" },
   },
 
+  "subastas-ventura": {
+    id: "subastas-ventura",
+    category: { title: "Technology Consultant", hasDivider: false },
+    title: "Innovation Analyst / UX Designer",
+    company: "Subastas Ventura",
+    role: "Innovation Analyst / UX Designer",
+    dateStart: "Dec 2021",
+    dateEnd: "Aug 2022",
+    tags: ["UX/UI", "Product Design", "Strategic Project"],
+
+    body: [
+      {
+        type: "statement",
+        content:
+          "Car crane drivers are the physical link in vehicle auctions across Mexico — 35% of operations, 60,000 deliveries a month, and no reliable way to track any of it.",
+      },
+
+      // ── Context ──────────────────────────────────────────────
+      { type: "heading", content: "Context" },
+      {
+        type: "paragraph",
+        content:
+          "Subastas Ventura runs digital vehicle auctions for insurance companies across Mexico. Car crane drivers are the physical link in that chain — they pick up auctioned vehicles and deliver them to auction yards nationwide, representing 35% of the company's operations and roughly 60,000 car deliveries a month.",
+      },
+
+      // ── Problem ───────────────────────────────────────────────
+      { type: "heading", content: "Problem" },
+      {
+        type: "paragraph",
+        content:
+          "Commute time was untrackable and routes were untraceable. Several steps in the handoff between crane suppliers, drivers, and yard staff were still manual, which compounded delays across every trip.",
+      },
+
+      // ── Objectives ────────────────────────────────────────────
+      { type: "heading", content: "Objectives" },
+      {
+        type: "list",
+        content: [
+          "Plan and deploy a solution to live-track car crane drivers",
+          "Give stakeholders — insurers, suppliers, yard staff — transparency into the status of every unit",
+          "Automate manual steps and fold them into the tracked flow",
+          "Send confirmation the moment a service is completed",
+        ],
+      },
+
+      // ── Key considerations ─────────────────────────────────────
+      { type: "heading", content: "Key Considerations" },
+      {
+        type: "list",
+        content: [
+          "Some cranes carry up to 5 vehicles at once",
+          "Signal drops out on stretches of several highways",
+          "Drivers need to check in at multiple points along the route, not just at the start and end",
+        ],
+      },
+
+      // ── Product strategy & mapping ─────────────────────────────
+      { type: "heading", content: "Product Strategy & Mapping the Ecosystem" },
+      {
+        type: "process-flow",
+        steps: [
+          { label: "Research & Information Architecture", color: "#1535b8" },
+          { label: "Ideation", color: "#2a4de0" },
+          { label: "Compliance Management", color: "#6b84e8" },
+          { label: "Prototype", color: "#9fb0f0" },
+          { label: "Deploy to Dev", color: "#c5d0f5", textColor: "#1a3aad" },
+        ],
+      },
+      {
+        type: "paragraph",
+        content:
+          "The process started with research — direct interviews with crane drivers, supplier sessions, and yard staff observations — to map the current state and identify every point where the process broke down. The service blueprint below is the designed future state: a connected ecosystem of apps that replaces manual handoffs with tracked, automated flows from pickup to final delivery.",
+      },
+      {
+        type: "embed",
+        src: "/blueprints/subastas-ventura-blueprint.html",
+        label: "Service Blueprint — Subastas Ventura",
+      },
+
+      // ── Solution ──────────────────────────────────────────────
+      { type: "heading", content: "Solution" },
+      {
+        type: "paragraph",
+        content:
+          "Three web apps and two mobile apps, connected through a shared database via API:",
+      },
+      {
+        type: "list",
+        content: [
+          "Crane suppliers manage and dispatch services to individual drivers",
+          "Insurance companies get scoped logins to track only their own units",
+          "View permissions are role-based, in line with NDA and security requirements across all parties",
+        ],
+      },
+
+      // ── My Role ───────────────────────────────────────────────
+      { type: "heading", content: "My Role" },
+      {
+        type: "paragraph",
+        content:
+          "I owned product strategy end to end and led UX for the ecosystem, while a third-party vendor handled development.",
+      },
+      {
+        type: "list",
+        content: [
+          "Defined the product strategy: what an ecosystem of connected apps needed to look like to actually solve the tracking and traceability problem, not just patch around it",
+          "Conducted interviews with car crane drivers directly, along with other internal and external subject-matter experts, to ground the design in how the work actually happens on the road",
+          "Mapped the end-to-end process and flows, and used those to define SLAs and write user stories",
+          "Turned research into data-visualization dashboards and presented findings and recommendations to managers and C-level leads",
+          "Designed the ecosystem from low-fidelity wireframes through to hi-fidelity screens for each epic, using Figma for design and Miro for flows, journey mapping, and service blueprinting",
+          "Led UX design and ownership across the three-app system, working directly with the vendor's developers to hand off detailed specs and keep implementation aligned with the intended experience",
+        ],
+      },
+
+      // ── Deliverables ──────────────────────────────────────────
+      { type: "heading", content: "Deliverables" },
+      {
+        type: "list",
+        content: [
+          "Product strategy",
+          "UX leadership",
+          "Systems architecture",
+          "User research & interviews",
+          "Service blueprints",
+          "Hi-fidelity screens",
+          "Developer handoff specs",
+        ],
+      },
+    ],
+
+    links: [],
+    prev: { id: "elipsis-fintech", title: "Elipsis (Mercado Libre ecosystem)" },
+    next: { id: "sai-design", title: "Sai Design & Image Consulting" },
+  },
+
   "vous-perfume": {
     id: "vous-perfume",
     category: { title: "Product Design", hasDivider: false },

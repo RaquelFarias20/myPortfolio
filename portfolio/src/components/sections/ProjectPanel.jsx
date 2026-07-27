@@ -1,5 +1,27 @@
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+
+function EmbedFrame({ src, label }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    function onMessage(e) {
+      if (e.data?.type === 'blueprintHeight' && ref.current) {
+        ref.current.style.height = e.data.height + 'px'
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
+
+  return (
+    <figure className="embed-frame" data-no-cursor>
+      <iframe ref={ref} src={src} title={label ?? 'Embedded content'} />
+      {label && <figcaption>{label}</figcaption>}
+    </figure>
+  )
+}
 
 function renderBlock(block, index) {
   switch (block.type) {
@@ -59,6 +81,27 @@ function renderBlock(block, index) {
           <span>Video coming soon</span>
         </div>
       )
+
+    case 'process-flow':
+      return (
+        <div key={index} className="process-flow">
+          <div className="process-flow__header">design process</div>
+          <div className="process-flow__steps">
+            {block.steps.map((step, i) => (
+              <div
+                key={i}
+                className="process-flow__step"
+                style={{ background: step.color, color: step.textColor ?? '#fff' }}
+              >
+                {step.label}
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+
+    case 'embed':
+      return <EmbedFrame key={index} src={block.src} label={block.label} />
 
     case 'media':
       return block.src
