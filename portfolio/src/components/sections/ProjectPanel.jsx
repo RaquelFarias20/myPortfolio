@@ -7,7 +7,7 @@ function EmbedFrame({ src, label }) {
 
   useEffect(() => {
     function onMessage(e) {
-      if (e.data?.type === 'blueprintHeight' && ref.current) {
+      if (e.data?.type === 'blueprintHeight' && ref.current && e.source === ref.current.contentWindow) {
         ref.current.style.height = e.data.height + 'px'
       }
     }

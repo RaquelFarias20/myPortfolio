@@ -267,7 +267,7 @@ export const projectDetails = {
   "subastas-ventura": {
     id: "subastas-ventura",
     category: { title: "Technology Consultant", hasDivider: false },
-    title: "Innovation Analyst / UX Designer",
+    title: "Car Crane Drivers' Software Ecosystem",
     company: "Subastas Ventura",
     role: "Innovation Analyst / UX Designer",
     dateStart: "Dec 2021",
@@ -335,12 +335,25 @@ export const projectDetails = {
       {
         type: "paragraph",
         content:
-          "The process started with research — direct interviews with crane drivers, supplier sessions, and yard staff observations — to map the current state and identify every point where the process broke down. The service blueprint below is the designed future state: a connected ecosystem of apps that replaces manual handoffs with tracked, automated flows from pickup to final delivery.",
+          "The process started with research, direct interviews with crane drivers, supplier sessions, and yard staff observations, to map the current state and identify every point where the process broke down. The service blueprint below is the designed future state: a connected ecosystem of apps that replaces manual handoffs with tracked, automated flows from pickup to final delivery.",
       },
       {
         type: "embed",
         src: "/blueprints/subastas-ventura-blueprint.html",
         label: "Service Blueprint — Subastas Ventura",
+      },
+
+      // ── From Tour to App ──────────────────────────────────────
+      { type: "heading", content: "From Tour to App" },
+      {
+        type: "paragraph",
+        content:
+          "The driver app's onboarding wasn't designed in isolation — it was built with the real workflow in mind. The six-screen sequence below moves a new driver from login to live data in under a minute.",
+      },
+      {
+        type: "embed",
+        src: "/blueprints/onboarding-prototype.html",
+        label: "Crane Driver App — Onboarding",
       },
 
       // ── Solution ──────────────────────────────────────────────
