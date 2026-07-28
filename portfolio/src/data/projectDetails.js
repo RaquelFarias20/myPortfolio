@@ -334,7 +334,7 @@ export const projectDetails = {
           { label: "Ideation", color: "#2a4de0" },
           { label: "Compliance Management", color: "#6b84e8" },
           { label: "Prototype", color: "#9fb0f0" },
-          { label: "Deploy to Dev", color: "#c5d0f5", textColor: "#1a3aad" },
+          { label: "Handoff to Dev", color: "#c5d0f5", textColor: "#1a3aad" },
         ],
       },
       {
