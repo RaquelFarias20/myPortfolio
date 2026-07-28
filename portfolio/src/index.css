@@ -878,6 +878,34 @@ header {
   color: var(--ink-soft);
 }
 
+.media--video {
+  aspect-ratio: unset;
+  border: none;
+  background: none;
+  display: block;
+}
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.media--video figcaption {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 10px 0 4px;
+  letter-spacing: 0.04em;
+}
+
 .media--img {
   aspect-ratio: unset;
   border: 1px solid var(--line);

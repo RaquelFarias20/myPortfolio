@@ -71,7 +71,7 @@ function renderBlock(block, index) {
         )
 
     case 'video':
-      return (
+      if (!block.src) return (
         <div key={index} className="video-placeholder">
           <div className="video-placeholder__icon" aria-hidden="true">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
@@ -81,6 +81,23 @@ function renderBlock(block, index) {
           <span>Video coming soon</span>
         </div>
       )
+      return block.src.startsWith('http')
+        ? (
+          <figure key={index} className="media media--video">
+            <div className="video-embed">
+              <iframe src={block.src} title={block.alt ?? 'Video'} allowFullScreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
+            </div>
+            {block.caption && <figcaption>{block.caption}</figcaption>}
+          </figure>
+        )
+        : (
+          <figure key={index} className="media media--video">
+            <video controls preload="metadata" style={{ width: '100%', borderRadius: '8px', display: 'block' }}>
+              <source src={block.src} type="video/mp4" />
+            </video>
+            {block.caption && <figcaption>{block.caption}</figcaption>}
+          </figure>
+        )
 
     case 'process-flow':
       return (

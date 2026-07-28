@@ -10,7 +10,12 @@ export const projectDetails = {
     tags: ["AI", "UX/UI", "Zero-to-One", "Product Strategy"],
 
     body: [
-      { type: "video" },
+      {
+        type: "video",
+        src: "https://www.youtube.com/embed/kIMYHh7Qtjw",
+        alt: "Introduction to UNICC AI Safety Lab",
+        caption: "Demo of the UNICC AI Safety Lab platform",
+      },
 
       // ── Introduction / Purpose ──────────────────────────────
       { type: "heading", content: "Introduction / Purpose" },
