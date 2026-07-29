@@ -102,7 +102,6 @@ function renderBlock(block, index) {
     case 'process-flow':
       return (
         <div key={index} className="process-flow">
-          <div className="process-flow__header">design process</div>
           <div className="process-flow__steps">
             {block.steps.map((step, i) => (
               <div

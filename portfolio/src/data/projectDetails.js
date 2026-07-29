@@ -361,6 +361,19 @@ export const projectDetails = {
         label: "Crane Driver App — Onboarding",
       },
 
+      // ── Supplier Web App ───────────────────────────────────────
+      { type: "heading", content: "Supplier Web App" },
+      {
+        type: "paragraph",
+        content:
+          "The crane supplier's side of the ecosystem — a web dashboard that lets dispatch teams receive work orders from Ventura, assign operators and cranes, and track each service in real time.",
+      },
+      {
+        type: "embed",
+        src: "/blueprints/supplier-web-gallery.html",
+        label: "Supplier Web App — Screen Gallery",
+      },
+
       // ── Solution ──────────────────────────────────────────────
       { type: "heading", content: "Solution" },
       {
