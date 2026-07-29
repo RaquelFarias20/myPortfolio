@@ -1,4 +1,181 @@
 export const projectDetails = {
+  "bettercampus-analytics": {
+    id: "bettercampus-analytics",
+    category: { title: "Analytics | AI", hasDivider: true },
+    title: "Building the Analytics Backbone for a 1.8M+ User Product",
+    company: "BetterCampus, Inc.",
+    role: "Product Analytics Specialist",
+    dateStart: "Jan 2026",
+    dateEnd: "Present",
+    tags: ["Analytics", "SQL", "Instrumentation", "Product Growth"],
+
+    body: [
+      {
+        type: "statement",
+        content:
+          "BetterCampus had analytics scattered across three app surfaces with no shared taxonomy, no reliable identity mapping, and no way to answer basic questions about who its users were or where revenue was coming from.",
+      },
+
+      // ── The Problem ───────────────────────────────────────────────
+      { type: "heading", content: "The Problem" },
+      {
+        type: "paragraph",
+        content:
+          "BetterCampus is a browser extension that grew from a Canvas skin into a full academic productivity suite — assignments, grades, study tools, notes, themes — used by over 1.8 million students. The product had outpaced its measurement.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Analytics events existed across three separate app surfaces: <strong>wxt</strong> (the main browser extension, with a richer helper that enriched every event with plan type, version, school, and browser/OS), <strong>ext-pages</strong> (extension-hosted pages with a simpler, separate tracking helper), and <strong>seo-pages</strong> (the marketing site, with its own duplicate versions of some onboarding components).",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Nobody could confidently say which signup flow was actually live, whether an event fired once or multiple times per action, or how product usage connected to revenue. Before any new instrumentation could be trusted, the existing setup had to be fully understood.",
+      },
+
+      // ── Process ───────────────────────────────────────────────────
+      { type: "heading", content: "Process" },
+      {
+        type: "process-flow",
+        steps: [
+          { label: "Audit & Design", color: "#1B1418", textColor: "#fff" },
+          { label: "Instrumentation", color: "#3A3336", textColor: "#fff" },
+          { label: "Custom Tooling", color: "#6E6A6C", textColor: "#fff" },
+          { label: "Insight Delivery", color: "#A39EA0", textColor: "#1B1418" },
+        ],
+      },
+
+      // ── Audit & Design ────────────────────────────────────────────
+      { type: "heading", content: "Audit & Design" },
+      {
+        type: "paragraph",
+        content:
+          "I started by tracing every tracking call back to its source file and route — not assuming a single source of truth, but labeling each path as live, legacy, fallback, or a genuinely separate surface. A signup questionnaire component existed in both <em>ext-pages</em> and <em>seo-pages</em> under near-identical names; matching the live product UI against the code confirmed which was actually shipping and which was a stale duplicate.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Out of this audit I wrote a master analytics plan structured around three pillars the business needed answers to:",
+      },
+      {
+        type: "list",
+        content: [
+          "<strong>Demographics</strong> — Who are our users: which schools, plan types, devices?",
+          "<strong>Product Usage</strong> — What do they actually do, and what drives retention?",
+          "<strong>Revenue</strong> — How does usage convert to trials, upgrades, and MRR?",
+        ],
+      },
+      {
+        type: "paragraph",
+        content:
+          "For each pillar I defined the required events, the enriched properties every event needed (user ID, school, normalized plan type, device/browser/extension version), and the specific dashboards and funnels — signup→onboarding, trial→paid, free→paid, retention — that would answer the business's key questions.",
+      },
+
+      // ── Instrumentation ───────────────────────────────────────────
+      { type: "heading", content: "Instrumentation" },
+      {
+        type: "paragraph",
+        content:
+          "With the taxonomy defined, I moved into three connected engineering streams:",
+      },
+      {
+        type: "list",
+        content: [
+          "<strong>Signup questionnaire metadata cleanup</strong> — standardized tracking across the two duplicate questionnaire flows so funnel data could be compared apples-to-apples",
+          "<strong>Signup flow metadata</strong> — added <code>flow_type</code> / <code>flow_step</code> properties so the same event (e.g. &ldquo;signup complete&rdquo;) could be understood in the context of where in the journey it happened, not just where in the app",
+          "<strong>Feature usage instrumentation</strong> — added <code>feature_used</code> tracking across five core surfaces: Study (file uploads), Notes (creation, including a voice-transcription path a bug report had missed), Tasks (drag-and-drop planning), Themes (swap + apply), and Grades (goal-setting)",
+        ],
+      },
+      {
+        type: "paragraph",
+        content:
+          "The most important engineering decision was <strong>separating intent from completion</strong>. For Study uploads, the event fires on user intent (clicking Upload/Continue) rather than on successful file processing — because the product question was \"did the user attempt this,\" not \"did the pipeline succeed.\" That distinction shaped where each event lived in the code and became the basis for defending the approach in code review, along with instrumenting both variants of an A/B-tested upload modal so we wouldn't silently lose half the experiment population.",
+      },
+
+      // ── Custom Tooling ────────────────────────────────────────────
+      { type: "heading", content: "Custom Tooling" },
+      {
+        type: "paragraph",
+        content:
+          "Dashboards answer \"what's happening now,\" but the team also needed a way to turn raw Stripe exports into a trustworthy recurring report without manual spreadsheet work every week. I built a <strong>Python/pandas CLI tool</strong> that:",
+      },
+      {
+        type: "list",
+        content: [
+          "Ingests Stripe subscription exports (CSV/XLSX)",
+          "Applies a canonical definition of \"active paying\" vs. \"active with a pending cancellation request\" — encoding the business's actual logic directly rather than leaving it to manual interpretation each run",
+          "Computes MRR (normalizing annual plans to a monthly equivalent), subscriber tenure (mean, median, P75, P90), cohort breakdowns by signup month, and trial-length distributions",
+          "Parses free-text cancellation feedback into a reason distribution",
+          "Outputs a clean, multi-tab Excel report on a single command",
+        ],
+      },
+      {
+        type: "paragraph",
+        content:
+          "This replaced a manual weekly process with a repeatable one-command report and became the backbone of the team's recurring business reporting.",
+      },
+
+      // ── Insight Delivery ──────────────────────────────────────────
+      { type: "heading", content: "Insight Delivery" },
+      {
+        type: "paragraph",
+        content:
+          "With instrumentation live and tooling in place, I ran a full SQL-based audit against 90 days of production data to answer the questions the master plan had set out, and to sanity-check the new tracking. The findings were more consequential than expected:",
+      },
+      {
+        type: "list",
+        content: [
+          "<strong>Retention crisis</strong> — day-1 return rate hovered around 1% across every signup cohort, dropping further by day 7 and day 30",
+          "<strong>Live onboarding regression</strong> — profile-completion and trial-claim rates dropped sharply around a specific week, a clear signal a shipped change had broken part of onboarding, not a data artifact",
+          "<strong>Broken status field</strong> — a core planning feature showed 0% completion rate across tens of thousands of created records, pointing to a tracking or state-update bug rather than genuine disuse",
+          "<strong>Runaway AI cost growth</strong> — usage-driving token costs on AI features had grown over 100× in under three months, far outpacing user growth — a monetization and cost-control flag for leadership",
+        ],
+      },
+      {
+        type: "paragraph",
+        content:
+          "Each of these became a flagged, actionable item handed directly to product and engineering — not just a chart.",
+      },
+
+      // ── Key Decisions & Trade-offs ────────────────────────────────
+      { type: "heading", content: "Key Decisions & Trade-offs" },
+      {
+        type: "list",
+        content: [
+          "<strong>Intent over completion events</strong> — chose to measure what the user tried to do, accepting that failures get counted, because that was the actual product question being asked",
+          "<strong>Leaned on existing architecture</strong> — kept ext-pages and wxt on their own existing tracking helpers rather than merging them, avoiding cross-surface complexity for marginal consistency gain",
+          "<strong>Canonical business definitions over raw platform fields</strong> — Stripe's status field alone didn't capture \"active but requested cancellation,\" so the business's actual definition was encoded directly into the tooling rather than left to manual interpretation each time",
+          "<strong>Traced ambiguity to source</strong> — when the same flow appeared to exist twice, resolved it by matching code to live UI rather than picking whichever looked more official",
+        ],
+      },
+
+      // ── Impact ────────────────────────────────────────────────────
+      { type: "heading", content: "Impact" },
+      {
+        type: "list",
+        content: [
+          "Replaced an untrustworthy, three-surface analytics setup with a single documented taxonomy and a standardized enrichment pattern",
+          "Shipped instrumentation covering five core product surfaces, closing gaps that had been silently under-tracking usage (voice-transcribed notes weren't counted before this work)",
+          "Delivered a reusable reporting tool that turned a manual weekly process into a one-command report",
+          "Surfaced a retention crisis and two live product bugs backed by a clean, audited dataset — no orphaned records, no null keys, ~1:1 referential integrity between users and subscription state",
+        ],
+      },
+
+      // ── Reflection ────────────────────────────────────────────────
+      { type: "heading", content: "Reflection" },
+      {
+        type: "paragraph",
+        content:
+          "The technical work here was straightforward — event tracking, SQL, pandas. What made it valuable was resisting the urge to just \"add more tracking\" and instead first asking what was already there, what could be trusted, and what specific business questions needed answering. The most useful output wasn't a dashboard — it was a small set of flagged, well-evidenced problems that the team could act on immediately.",
+      },
+    ],
+
+    links: [],
+    prev: null,
+    next: { id: "un-ai-safety", title: "AI Engineer & Platform Lead" },
+  },
+
   "un-ai-safety": {
     id: "un-ai-safety",
     category: { title: "Analytics | AI", hasDivider: true },
