@@ -33,6 +33,11 @@ export const projectDetails = {
         content:
           "Nobody could confidently say which signup flow was actually live, whether an event fired once or multiple times per action, or how product usage connected to revenue. Before any new instrumentation could be trusted, the existing setup had to be fully understood.",
       },
+      {
+        type: "media",
+        src: "/images/bettercampus_analytics_architecture.png",
+        alt: "Analytics architecture diagram — three scattered surfaces consolidated into one standardized pipeline",
+      },
 
       // ── Process ───────────────────────────────────────────────────
       { type: "heading", content: "Process" },
@@ -91,6 +96,11 @@ export const projectDetails = {
         type: "paragraph",
         content:
           "The most important engineering decision was <strong>separating intent from completion</strong>. For Study uploads, the event fires on user intent (clicking Upload/Continue) rather than on successful file processing — because the product question was \"did the user attempt this,\" not \"did the pipeline succeed.\" That distinction shaped where each event lived in the code and became the basis for defending the approach in code review, along with instrumenting both variants of an A/B-tested upload modal so we wouldn't silently lose half the experiment population.",
+      },
+      {
+        type: "embed",
+        src: "/blueprints/bettercampus-intent.html",
+        label: "Tracking approach: intent vs. completion",
       },
 
       // ── Custom Tooling ────────────────────────────────────────────
