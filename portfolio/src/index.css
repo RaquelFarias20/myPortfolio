@@ -1269,6 +1269,10 @@ header {
   position: fixed;
   z-index: 9999;
   max-width: 280px;
+  /* Shield from JS color overrides — always default DS palette */
+  --ink:      #0e0e52;
+  --ink-soft: #5a5b84;
+  --primary:  #1466ff;
   background: var(--bg);
   color: var(--ink);
   border: 1px solid var(--line);
