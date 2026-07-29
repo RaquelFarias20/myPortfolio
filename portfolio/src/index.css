@@ -38,6 +38,19 @@ html {
   scroll-behavior: auto;
 } /* Lenis handles smooth scroll */
 
+body {
+  transition: background-color 0.55s ease;
+}
+
+/* Smooth transition when --ink is overridden from JS.
+   Scoped to common text carriers; excludes play-box and stat-bt
+   (those re-pin --ink locally and never need to animate). */
+h1, h2, h3, h4, h5, h6,
+p, a, span, li, label,
+.num, .label, .tag, .stat-sub {
+  transition: color 0.55s ease;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    CUSTOM CURSOR  (pointer devices only)
    ═══════════════════════════════════════════════════════════════ */
@@ -256,6 +269,12 @@ header {
   width: 100%;
   aspect-ratio: 4 / 5;
   background: var(--bg);
+  /* Locally re-pin design-system tokens so the JS overrides on
+     :root never bleed into the always-white play-box. */
+  --ink:      #0e0e52;
+  --ink-soft: #5a5b84;
+  --primary:  #1466ff;
+  color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 4px;
   overflow: hidden;
@@ -270,15 +289,16 @@ header {
 }
 
 .play-hint {
-  position: absolute;
-  left: 14px;
-  bottom: 12px;
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  opacity: 0.5;
   pointer-events: none;
+  align-self: flex-start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1011,6 +1031,276 @@ header {
   font-size: 0.9rem;
   color: var(--ink);
   transition: color 0.15s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PLAYBOX — B/T COLOR TOOL
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Absolute UI layer — sits above blocks via z-index.
+   pointer-events:none on the container; interactive children re-enable. */
+.pb-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 14px 0;
+  gap: 10px;
+  pointer-events: none;
+}
+.pb-ui > * {
+  pointer-events: auto;
+}
+
+/* B/T target row */
+.bt-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Target slot — AABB drop zone; no native drag events needed */
+.bt-slot {
+  width: 110px;
+  height: 116px;
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  pointer-events: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+.bt-slot--filled {
+  border-style: solid;
+}
+.bt-letter {
+  font-size: 36px;
+  font-weight: 800;
+  font-family: "Outfit", sans-serif;
+  color: var(--ink);
+  line-height: 1;
+}
+.bt-caption {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1;
+}
+
+/* Swap button */
+.swap-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  flex: none;
+  transition: opacity 0.15s, background 0.15s;
+}
+.swap-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.swap-btn:not(:disabled):hover {
+  background: var(--hover-fill);
+}
+
+/* Restart button — top-right corner of play-box */
+.restart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 21;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.15s, color 0.15s;
+}
+.restart-btn:hover {
+  background: var(--hover-fill);
+  color: var(--ink);
+}
+
+/* ── Stats nav — B/T stat blocks ──────────────────────────────── */
+
+/* Non-link stat blocks: always white bg and locally-pinned ink so the
+   root --ink override never affects their text. */
+.stat--bt {
+  cursor: default;
+  background: var(--bg);
+  --ink:      #0e0e52;
+  --ink-soft: #5a5b84;
+  --primary:  #1466ff;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 4px 8px 8px;
+}
+.stat--bt:hover .num,
+.stat--bt:hover .label {
+  color: var(--ink);
+}
+
+/* Label row with inline tooltip button */
+.label--flex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+/* Sub-text below label (helper copy) */
+.stat-sub {
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+  opacity: 0.65;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* WCAG pass/fail badges */
+.stat-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.stat-badge {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid;
+  line-height: 1.2;
+}
+.stat-badge.pass {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+.stat-badge.fail {
+  background: var(--hover-fill);
+  color: var(--ink-soft);
+  border-color: var(--line);
+  text-decoration: line-through;
+}
+
+/* OLED power bar */
+.power-bar-wrap {
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.power-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.35s ease, background 0.35s ease;
+}
+
+/* Desktop ordering: contrast + power appear after photography.
+   On mobile the DOM order already puts them first (no override needed). */
+@media (min-width: 860px) {
+  .stat--about        { order: 1; }
+  .stat--projects     { order: 2; }
+  .stat--illustration { order: 3; }
+  .stat--photography  { order: 4; }
+  .stat--contrast     { order: 5; }
+  .stat--power        { order: 6; }
+  .stat--contact      { order: 7; }
+}
+
+/* Tooltip trigger — small italic i button */
+.tt-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 8px;
+  font-style: italic;
+  font-family: Georgia, serif;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex: none;
+  transition: color 0.12s;
+}
+.tt-btn:hover,
+.tt-btn:focus-visible {
+  color: var(--ink);
+  border-color: var(--ink);
+  outline: none;
+}
+
+/* Tooltip popup — portal to body so it escapes any overflow:hidden.
+   Uses the DS light palette so it reads as part of the page, not a
+   foreign dark element. */
+.tt-popup {
+  position: fixed;
+  z-index: 9999;
+  max-width: 280px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 11px;
+  line-height: 1.55;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(14, 14, 82, 0.10), 0 1px 4px rgba(14, 14, 82, 0.06);
+}
+.tt-popup p {
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+.tt-popup p:last-child,
+.tt-popup ul:last-child {
+  margin-bottom: 0;
+}
+.tt-popup ul {
+  margin: 4px 0 0;
+  padding-left: 14px;
+}
+.tt-popup li {
+  margin-bottom: 4px;
+  color: var(--ink-soft);
+}
+.tt-popup li:last-child {
+  margin-bottom: 0;
+}
+.tt-popup strong {
+  font-weight: 700;
+  color: var(--ink);
 }
 
 /* ═══════════════════════════════════════════════════════════════

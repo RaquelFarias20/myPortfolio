@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intent vs. Completion</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { height: fit-content; min-height: 0; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fcfcfe;
+    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #0e0e52;
+  }
+
+  /* ── Grid ──────────────────────────────────────────────────── */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px 24px 24px;
+  }
+
+  /* ── Card base ─────────────────────────────────────────────── */
+  .card {
+    background: #f4f4fb;
+    border: 1.5px solid #e3e3ee;
+    border-radius: 10px;
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Chosen card: white bg + 2px accent border */
+  .card--chosen {
+    background: #fff;
+    border-color: #0e0e52;
+    border-width: 2px;
+  }
+
+  /* ── Badge — appears only on the chosen card ───────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ebebf8;
+    color: #0e0e52;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    align-self: flex-start;
+    margin-bottom: 10px;
+  }
+
+  /* ── Title row: icon + label ───────────────────────────────── */
+  .card__title-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+
+  .card__icon {
+    flex: none;
+    color: #5a5b84;
+  }
+
+  .card__title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.25;
+    color: #0e0e52;
+  }
+
+  /* ── Body copy ─────────────────────────────────────────────── */
+  .card__desc {
+    font-size: 13px;
+    margin: 0 0 10px;
+    line-height: 1.55;
+    color: #0e0e52;
+  }
+
+  /* Trade-off: separated by a rule, visually de-emphasized */
+  .card__tradeoff {
+    font-size: 12px;
+    color: #5a5b84;
+    margin: 0;
+    line-height: 1.55;
+    padding-top: 10px;
+    border-top: 1px solid #e3e3ee;
+  }
+
+  /* ── MOBILE ≤ 520px: stack cards, chosen goes first ────────── */
+  @media (max-width: 520px) {
+    .comparison {
+      grid-template-columns: 1fr;
+      padding: 14px 14px 18px;
+      gap: 10px;
+    }
+    .card--chosen { order: -1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="comparison">
+
+  <!-- Card A: not chosen -->
+  <div class="card">
+    <div class="card__title-row">
+      <!-- circle-check outline icon -->
+      <svg class="card__icon" width="15" height="15" viewBox="0 0 15 15" fill="none"
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <circle cx="7.5" cy="7.5" r="6"/>
+        <path d="M5 7.5l2 2 3-3"/>
+      </svg>
+      <h3 class="card__title">Completion-based tracking</h3>
+    </div>
+    <p class="card__desc">Fires only after the action fully finishes processing.</p>
+    <p class="card__tradeoff">Measures execution. Risk: silently under-counts real attempts if the action fails partway through.</p>
+  </div>
+
+  <!-- Card B: chosen approach -->
+  <div class="card card--chosen">
+    <span class="badge">Chosen approach</span>
+    <div class="card__title-row">
+      <!-- sparkle / 4-point star icon -->
+      <svg class="card__icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor"
+           aria-hidden="true">
+        <path d="M7 1 L8.2 5.8 L13 7 L8.2 8.2 L7 13 L5.8 8.2 L1 7 L5.8 5.8 Z"/>
+      </svg>
+      <h3 class="card__title">Intent-based tracking</h3>
+    </div>
+    <p class="card__desc">Fires the moment the user commits to the action.</p>
+    <p class="card__tradeoff">Measures what the user actually tried to do — matches the real product question: did they attempt this?</p>
+  </div>
+
+</div>
+
+<script>
+  function sendHeight() {
+    var h = Math.ceil(document.body.getBoundingClientRect().height) + 2;
+    window.parent.postMessage({ type: 'blueprintHeight', height: h }, '*');
+  }
+
+  window.addEventListener('load', function() {
+    sendHeight();
+    setTimeout(sendHeight, 150);
+  });
+  window.addEventListener('resize', sendHeight);
+</script>
+</body>
+</html>

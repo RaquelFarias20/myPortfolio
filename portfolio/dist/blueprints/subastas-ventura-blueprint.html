@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service Blueprint — Subastas Ventura</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --surface: #ffffff;
+        --ink: #0b1424;
+        --ink-soft: #5b677a;
+        --ink-faint: #93a0b4;
+        --line: #e3e8f2;
+
+        --blue: #2a4de0;
+        --blue-soft: #e9eefd;
+        --blue-deep: #12266b;
+
+        --teal: #0e9e9e;
+        --teal-soft: #e1f6f5;
+        --teal-deep: #0a4e4e;
+
+        --amber: #c97a12;
+        --amber-soft: #fcefda;
+        --amber-deep: #6b3e05;
+
+        --end: #d8365a;
+        --end-soft: #fce4e9;
+        --end-deep: #7a0f28;
+
+        --slot: 128px;
+        --label-w: 92px;
+
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 20px 16px 40px;
+      }
+
+      h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: clamp(15px, 2.5vw, 18px);
+        line-height: 1.3;
+        letter-spacing: 0.01em;
+        margin: 0 0 10px;
+      }
+
+      .lede {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--ink-soft);
+        max-width: 640px;
+        margin: 0 0 16px;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 18px;
+        padding: 14px 16px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        white-space: nowrap;
+      }
+      .swatch {
+        width: 12px;
+        height: 12px;
+        border-radius: 4px;
+        flex: none;
+      }
+      .swatch.web {
+        background: var(--blue);
+      }
+      .swatch.app {
+        background: var(--teal);
+      }
+      .swatch.note {
+        background: var(--amber);
+      }
+      .swatch.end {
+        background: var(--end);
+        border-radius: 50%;
+      }
+
+      .journey {
+        margin-top: 24px;
+      }
+
+      .journey-head {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+      }
+
+      .journey-tag {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        color: var(--ink-faint);
+        text-transform: uppercase;
+      }
+
+      .journey h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      .scroll-hint {
+        font-size: 11px;
+        color: var(--ink-faint);
+        margin: 6px 0 14px;
+      }
+      .scroll-hint::before {
+        content: "↔ ";
+      }
+
+      @media (min-width: 900px) {
+        .scroll-hint {
+          display: none;
+        }
+      }
+
+      .board-frame {
+        position: relative;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+        clip-path: inset(0 round 16px);
+      }
+
+      .board {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .lane {
+        display: flex;
+        border-bottom: 1px solid var(--line);
+      }
+      .lane:last-child {
+        border-bottom: none;
+      }
+
+      .lane-label {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        flex: 0 0 var(--label-w);
+        width: var(--label-w);
+        background: var(--surface);
+        border-right: 1px solid var(--line);
+        padding: 8px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        justify-content: center;
+      }
+
+      .lane-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+      .lane[data-kind="web"] .lane-icon {
+        background: var(--blue-soft);
+        color: var(--blue-deep);
+      }
+      .lane[data-kind="app"] .lane-icon {
+        background: var(--teal-soft);
+        color: var(--teal-deep);
+      }
+      .lane[data-kind="note"] .lane-icon {
+        background: var(--amber-soft);
+        color: var(--amber-deep);
+      }
+      .lane-icon svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      .lane-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 11.5px;
+        line-height: 1.25;
+        color: var(--ink);
+      }
+      .lane-sub {
+        font-size: 9.5px;
+        color: var(--ink-faint);
+        line-height: 1.2;
+      }
+
+      .lane-track {
+        display: flex;
+        position: relative;
+        background-image: linear-gradient(var(--line), var(--line));
+        background-size: 100% 1px;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .lane[data-kind="note"] .lane-track {
+        background-image: none;
+      }
+
+      .slot {
+        flex: 0 0 var(--slot);
+        width: var(--slot);
+        padding: 5px 5px;
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .stop {
+        width: 100%;
+        position: relative;
+        border-radius: 8px;
+        padding: 5px 7px 6px;
+        border: 1px solid transparent;
+      }
+
+      .stop-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 8px;
+        margin-bottom: 3px;
+      }
+
+      .stop-title {
+        font-weight: 600;
+        font-size: 11.5px;
+        line-height: 1.3;
+        display: block;
+      }
+      .stop-sub {
+        font-size: 9.5px;
+        line-height: 1.35;
+        margin-top: 3px;
+        display: block;
+      }
+
+      .lane[data-kind="web"] .stop {
+        background: var(--blue-soft);
+      }
+      .lane[data-kind="web"] .stop-num {
+        background: var(--blue);
+        color: #fff;
+      }
+      .lane[data-kind="web"] .stop-title {
+        color: var(--blue-deep);
+      }
+      .lane[data-kind="web"] .stop-sub {
+        color: #4457b0;
+      }
+
+      .lane[data-kind="app"] .stop {
+        background: var(--teal-soft);
+      }
+      .lane[data-kind="app"] .stop-num {
+        background: var(--teal);
+        color: #fff;
+      }
+      .lane[data-kind="app"] .stop-title {
+        color: var(--teal-deep);
+      }
+      .lane[data-kind="app"] .stop-sub {
+        color: #2c7a78;
+      }
+
+      .stop.end {
+        background: var(--end-soft) !important;
+      }
+      .stop.end .stop-num {
+        background: var(--end) !important;
+        color: #fff;
+      }
+      .stop.end .stop-title {
+        color: var(--end-deep) !important;
+      }
+      .stop.end .stop-sub {
+        color: #a83a52 !important;
+      }
+
+      .stop.connect::after {
+        content: "";
+        position: absolute;
+        right: -9px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 6px;
+        height: 6px;
+        border-top: 1.5px solid currentColor;
+        border-right: 1.5px solid currentColor;
+        opacity: 0.55;
+      }
+      .lane[data-kind="web"] .stop.connect::after {
+        color: var(--blue);
+      }
+      .lane[data-kind="app"] .stop.connect::after {
+        color: var(--teal);
+      }
+
+      .handoff {
+        font-size: 8.5px;
+        color: var(--ink-faint);
+        margin-top: 5px;
+        display: block;
+      }
+
+      .lane[data-kind="note"] .lane-label {
+        justify-content: center;
+      }
+      .note-bar {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 22px;
+        background: var(--amber-soft);
+        border: 1px dashed rgba(201, 122, 18, 0.45);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        white-space: nowrap;
+      }
+      .note-bar span {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: var(--amber-deep);
+        letter-spacing: 0.01em;
+      }
+      .lane[data-kind="note"] .lane-track {
+        min-height: 38px;
+        position: relative;
+      }
+
+      @media (min-width: 640px) {
+        :root {
+          --slot: 150px;
+          --label-w: 156px;
+        }
+        .lane-label {
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 8px;
+        }
+        .lane-icon {
+          width: 26px;
+          height: 26px;
+          margin-top: 1px;
+          flex-shrink: 0;
+        }
+        .lane-icon svg {
+          width: 14px;
+          height: 14px;
+        }
+        .lane-name {
+          font-size: 12.5px;
+        }
+        .lane-sub {
+          font-size: 10px;
+        }
+        .stop-title {
+          font-size: 12.5px;
+        }
+        .stop-sub {
+          font-size: 10px;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .page {
+          padding-top: 20px;
+        }
+      }
+
+      footer.credit {
+        margin-top: 40px;
+        font-size: 11px;
+        color: var(--ink-faint);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Service blueprint</h1>
+      <p class="lede">
+        How a vehicle moves from pickup to the auction floor and on to the final
+        customer — every hand-off between the crane driver, the crane supplier,
+        and Subastas Ventura's teams, mapped app by app.
+      </p>
+
+      <div class="legend">
+        <div class="legend-item">
+          <span class="swatch web"></span>Web action
+        </div>
+        <div class="legend-item">
+          <span class="swatch app"></span>Mobile app action
+        </div>
+        <div class="legend-item">
+          <span class="swatch note"></span>Visibility across roles
+        </div>
+        <div class="legend-item">
+          <span class="swatch end"></span>End of journey
+        </div>
+      </div>
+
+      <!-- JOURNEY 1 -->
+      <section class="journey">
+        <div class="journey-head">
+          <span class="journey-tag">Journey 01</span>
+          <h2>From the pickup event to Subastas Ventura's premises</h2>
+        </div>
+        <p class="scroll-hint">Swipe to follow the route</p>
+
+        <div class="board-frame">
+          <div class="board">
+            <!-- Ventura Web -->
+            <div class="lane" data-kind="web">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Ventura Web</div>
+                  <div class="lane-sub">Back Office</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">1</span
+                    ><span class="stop-title">Entry folio generated (QR)</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+              </div>
+            </div>
+
+            <!-- Supplier Web -->
+            <div class="lane" data-kind="web">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Supplier Web</div>
+                  <div class="lane-sub">Crane Supplier</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">2</span
+                    ><span class="stop-title">Pickup work order received</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">3</span
+                    ><span class="stop-title">Operator assigned</span
+                    ><span class="handoff">↴ hands off to Driver App</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+              </div>
+            </div>
+
+            <!-- Driver App -->
+            <div class="lane" data-kind="app">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="6" y="2" width="12" height="20" rx="2.5" />
+                    <line x1="10.5" y1="18.5" x2="13.5" y2="18.5" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Driver App</div>
+                  <div class="lane-sub">Crane Driver</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">4</span
+                    ><span class="stop-title">Unit pickup notification</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">5</span
+                    ><span class="stop-title"
+                      >Confirms folio for pickup trip</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">6</span
+                    ><span class="stop-title">Confirms pickup</span
+                    ><span class="stop-sub">2 required photos</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">7</span
+                    ><span class="stop-title">Enters perimeter (200 m)</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">8</span
+                    ><span class="stop-title"
+                      >Arrival push + notification sent</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">9</span
+                    ><span class="stop-title">Confirms unit VIN entry</span
+                    ><span class="handoff">↴ hands off to Site Staff App</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">10</span
+                    ><span class="stop-title">Entry QR generated</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">13</span
+                    ><span class="stop-title"
+                      >Delivery-completion QR generated</span
+                    >
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">15</span
+                    ><span class="stop-title"
+                      >Presses "exit perimeter zone"</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop end connect">
+                    <span class="stop-num">16</span
+                    ><span class="stop-title"
+                      >Unload process integrated with unit exit</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Site Staff App -->
+            <div class="lane" data-kind="app">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="6" y="2" width="12" height="20" rx="2.5" />
+                    <line x1="10.5" y1="18.5" x2="13.5" y2="18.5" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Site Staff App</div>
+                  <div class="lane-sub">Site Staff</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">4b</span
+                    ><span class="stop-title">Next-arrival notification</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">7b</span
+                    ><span class="stop-title"
+                      >Wait-time notification (per rule)</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">8b</span
+                    ><span class="stop-title"
+                      >Crane-at-perimeter notification</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">9b</span
+                    ><span class="stop-title">Notification</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">11</span
+                    ><span class="stop-title">Entry QR scanned</span
+                    ><span class="stop-sub"
+                      >entry confirmation notification</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">12</span
+                    ><span class="stop-title"
+                      >Operations requests crane entry</span
+                    >
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">14</span
+                    ><span class="stop-title">Retrieval turn generated</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+              </div>
+            </div>
+
+            <!-- annotation -->
+            <div class="lane" data-kind="note">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </div>
+                <div><div class="lane-name">Visibility</div></div>
+              </div>
+              <div class="lane-track">
+                <div
+                  class="note-bar"
+                  style="
+                    left: var(--slot);
+                    width: calc(var(--slot) * 14 - 16px);
+                  "
+                >
+                  <span
+                    >Full-time visibility of the operation for stakeholders
+                    monitoring this journey</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- JOURNEY 2 -->
+      <section class="journey">
+        <div class="journey-head">
+          <span class="journey-tag">Journey 02</span>
+          <h2>From Subastas Ventura's premises to the final customer</h2>
+        </div>
+        <p class="scroll-hint">Swipe to follow the route</p>
+
+        <div class="board-frame">
+          <div class="board">
+            <!-- Ventura Web Back Office -->
+            <div class="lane" data-kind="web">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Ventura Web</div>
+                  <div class="lane-sub">Back Office</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">1</span
+                    ><span class="stop-title"
+                      >Work order generates exit folio (QR)</span
+                    >
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+              </div>
+            </div>
+
+            <!-- Supplier Web -->
+            <div class="lane" data-kind="web">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Supplier Web</div>
+                  <div class="lane-sub">Crane Supplier</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">2</span
+                    ><span class="stop-title">Operator assigned</span
+                    ><span class="stop-sub"
+                      >supplier admin can always reject the service</span
+                    >
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+              </div>
+            </div>
+
+            <!-- Driver App -->
+            <div class="lane" data-kind="app">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="6" y="2" width="12" height="20" rx="2.5" />
+                    <line x1="10.5" y1="18.5" x2="13.5" y2="18.5" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Driver App</div>
+                  <div class="lane-sub">Crane Driver</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">3</span
+                    ><span class="stop-title">Accepts the service</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">4</span
+                    ><span class="stop-title">Confirms service</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">5</span
+                    ><span class="stop-title">Departure notification sent</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">6</span
+                    ><span class="stop-title"
+                      >Confirms arrival and departure</span
+                    >
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">7</span
+                    ><span class="stop-title">Enters Ventura perimeter</span
+                    ><span class="handoff">↴ hands off to Security App</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop end connect">
+                    <span class="stop-num">13</span
+                    ><span class="stop-title">Returns to perimeter zone</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Security App -->
+            <div class="lane" data-kind="app">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="6" y="2" width="12" height="20" rx="2.5" />
+                    <line x1="10.5" y1="18.5" x2="13.5" y2="18.5" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Site Staff App</div>
+                  <div class="lane-sub">Site Staff</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">8</span
+                    ><span class="stop-title">Yard entry confirmed</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">9</span
+                    ><span class="stop-title">Generates delivery QR</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop connect">
+                    <span class="stop-num">10</span
+                    ><span class="stop-title">Service-completion process</span>
+                  </div>
+                </div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">11</span
+                    ><span class="stop-title">Marks exit QR</span
+                    ><span class="handoff">↴ hands off to Control Center</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+              </div>
+            </div>
+
+            <!-- Control Center Web -->
+            <div class="lane" data-kind="web">
+              <div class="lane-label">
+                <div class="lane-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="lane-name">Control Center</div>
+                  <div class="lane-sub">Ventura Web</div>
+                </div>
+              </div>
+              <div class="lane-track">
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot">
+                  <div class="stop">
+                    <span class="stop-num">12</span
+                    ><span class="stop-title">Delivery QR generated</span
+                    ><span class="stop-sub">final record for the customer</span>
+                  </div>
+                </div>
+                <div class="slot"></div>
+                <div
+                  class="note-bar"
+                  style="
+                    left: var(--slot);
+                    width: calc(var(--slot) * 9 - 16px);
+                  "
+                >
+                  <span
+                    >Full-time visibility of the operation for stakeholders
+                    monitoring this journey</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="credit">
+        Service blueprint · Subastas Ventura car-crane ecosystem · redrawn for
+        portfolio presentation
+      </footer>
+    </div>
+    <script>
+      function sendHeight() {
+        var h = document.documentElement.scrollHeight;
+        window.parent.postMessage({ type: "blueprintHeight", height: h }, "*");
+      }
+      window.addEventListener("load", sendHeight);
+      window.addEventListener("resize", sendHeight);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Architecture</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* height: fit-content prevents the html element from stretching
+     to the iframe viewport — fixes scrollHeight returning 600px
+     instead of the actual content height */
+  html {
+    height: fit-content;
+    min-height: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fcfcfe;
+    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #0e0e52;
+  }
+
+  /* ── Layout ────────────────────────────────────────────────── */
+  .diagram {
+    padding: 28px 24px 32px;
+    position: relative;
+  }
+
+  /* SVG overlay for desktop arrows */
+  #arrows {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── Tier rows ─────────────────────────────────────────────── */
+  .tier {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* space for SVG arrows between tiers */
+  .tier + .tier { margin-top: 44px; }
+
+  /* ── Box ───────────────────────────────────────────────────── */
+  .box {
+    flex: 1;
+    min-width: 0;
+    background: #f4f4fb;
+    border: 1.5px solid #e3e3ee;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  /* Consolidation box: white + accent border */
+  .tier--2 .box {
+    flex: none;
+    width: 256px;
+    background: #fff;
+    border-color: #0e0e52;
+    border-width: 2px;
+  }
+
+  .box__label {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0 0 3px;
+    line-height: 1.3;
+  }
+
+  .box__sub {
+    font-size: 11px;
+    color: #5a5b84;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ── Mobile connector — shown only at ≤520px ───────────────── */
+  .mob-connector { display: none; }
+
+  /* ── MOBILE ≤ 520px ─────────────────────────────────────────
+     Boxes stack in a single column, SVG hidden,
+     simple vertical rule connects the tiers.               */
+  @media (max-width: 520px) {
+    .diagram { padding: 20px 14px 24px; }
+
+    .tier {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .tier + .tier { margin-top: 0; }
+    .tier--2 .box { width: auto; }
+    .box { text-align: left; }
+
+    #arrows { display: none; }
+
+    .mob-connector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 24px;
+      margin: 2px 0;
+    }
+    .mob-connector::after {
+      content: '';
+      display: block;
+      width: 1.5px;
+      height: 100%;
+      background: #c0c0d8;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="diagram" id="diagram">
+  <svg id="arrows" aria-hidden="true"></svg>
+
+  <div class="tier tier--1">
+    <div class="box" id="b1">
+      <p class="box__label">Browser extension</p>
+      <p class="box__sub">Richer analytics data</p>
+    </div>
+    <div class="box" id="b2">
+      <p class="box__label">Extension pages</p>
+      <p class="box__sub">Signup, study, notes</p>
+    </div>
+    <div class="box" id="b3">
+      <p class="box__label">Marketing &amp; onboarding</p>
+      <p class="box__sub">Public-facing pages</p>
+    </div>
+  </div>
+
+  <div class="mob-connector" aria-hidden="true"></div>
+
+  <div class="tier tier--2">
+    <div class="box" id="b4">
+      <p class="box__label">Standardized event tracking</p>
+      <p class="box__sub">Shared taxonomy &amp; enrichment</p>
+    </div>
+  </div>
+
+  <div class="mob-connector" aria-hidden="true"></div>
+
+  <div class="tier tier--3">
+    <div class="box" id="b5">
+      <p class="box__label">Usage dashboards</p>
+      <p class="box__sub">Product &amp; funnel analytics</p>
+    </div>
+    <div class="box" id="b6">
+      <p class="box__label">Revenue data</p>
+      <p class="box__sub">Billing &amp; subscription data</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var STROKE   = '#c0c0d8';
+  var STROKE_W = 1.5;
+  var AH       = 6;
+
+  function getBox(id) {
+    var el = document.getElementById(id);
+    var er = el.getBoundingClientRect();
+    var dr = document.getElementById('diagram').getBoundingClientRect();
+    return {
+      cx:     er.left - dr.left + er.width / 2,
+      top:    er.top  - dr.top,
+      bottom: er.top  - dr.top + er.height,
+    };
+  }
+
+  function curve(x1, y1, x2, y2, midY) {
+    return 'M' + x1 + ',' + y1
+         + ' C' + x1 + ',' + midY
+         + ' '  + x2 + ',' + midY
+         + ' '  + x2 + ',' + y2;
+  }
+
+  function draw() {
+    var svg = document.getElementById('arrows');
+    if (window.innerWidth <= 520) { svg.innerHTML = ''; return; }
+
+    var b1 = getBox('b1'), b2 = getBox('b2'), b3 = getBox('b3');
+    var b4 = getBox('b4');
+    var b5 = getBox('b5'), b6 = getBox('b6');
+
+    var m12 = (b1.bottom + b4.top) / 2;
+    var m23 = (b4.bottom + b5.top) / 2;
+
+    var marker = '<defs>'
+      + '<marker id="ah" markerWidth="' + AH + '" markerHeight="' + AH + '"'
+      + ' refX="' + (AH - 1) + '" refY="' + (AH / 2) + '" orient="auto">'
+      + '<polygon points="0 0, ' + AH + ' ' + (AH / 2) + ', 0 ' + AH + '"'
+      + ' fill="' + STROKE + '" /></marker></defs>';
+
+    var pa = ' stroke="' + STROKE + '" stroke-width="' + STROKE_W + '"'
+           + ' fill="none" marker-end="url(#ah)"';
+
+    svg.innerHTML = marker + [
+      '<path d="' + curve(b1.cx, b1.bottom, b4.cx, b4.top - AH, m12) + '"' + pa + '/>',
+      '<path d="' + curve(b2.cx, b2.bottom, b4.cx, b4.top - AH, m12) + '"' + pa + '/>',
+      '<path d="' + curve(b3.cx, b3.bottom, b4.cx, b4.top - AH, m12) + '"' + pa + '/>',
+      '<path d="' + curve(b4.cx, b4.bottom, b5.cx, b5.top - AH, m23) + '"' + pa + '/>',
+      '<path d="' + curve(b4.cx, b4.bottom, b6.cx, b6.top - AH, m23) + '"' + pa + '/>',
+    ].join('');
+  }
+
+  /* Use body.getBoundingClientRect().height — unlike scrollHeight,
+     this is not inflated by the iframe's viewport height         */
+  function sendHeight() {
+    var h = Math.ceil(document.body.getBoundingClientRect().height) + 2;
+    window.parent.postMessage({ type: 'blueprintHeight', height: h }, '*');
+  }
+
+  window.addEventListener('load', function() {
+    draw();
+    sendHeight();
+    /* Retry — ensures the parent listener is mounted even on fast loads */
+    setTimeout(sendHeight, 150);
+  });
+
+  window.addEventListener('resize', function() { draw(); sendHeight(); });
+</script>
+</body>
+</html>
