@@ -757,6 +757,29 @@ export const projectDetails = {
         caption: "Stacking Diagram",
         maxHeight: "360px",
       },
+
+      // ── Alternative Designs ─────────────────────────────────
+      { type: "heading", content: "Alternative Designs" },
+      {
+        type: "gallery",
+        images: [
+          {
+            src: "/images/vous_minimalistic_rose.png",
+            alt: "Vous — Minimalistic Rose edition",
+            caption: "Minimalistic Rose",
+          },
+          {
+            src: "/images/vous_minimalistic_crystal_clear.png",
+            alt: "Vous — Crystal Clear edition",
+            caption: "Crystal Clear",
+          },
+          {
+            src: "/images/vous_minimalistic.png",
+            alt: "Vous — Minimalistic edition",
+            caption: "Minimalistic",
+          },
+        ],
+      },
     ],
 
     links: [],

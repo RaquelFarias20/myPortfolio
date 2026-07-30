@@ -946,6 +946,31 @@ header {
   letter-spacing: 0.04em;
 }
 
+.media-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+.media-gallery__item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0;
+}
+.media-gallery__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media-gallery__item figcaption {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 8px 0 6px;
+  letter-spacing: 0.04em;
+}
+
 /* ── Links row ── */
 .panel-links {
   display: flex;
