@@ -119,6 +119,18 @@ function renderBlock(block, index) {
     case 'embed':
       return <EmbedFrame key={index} src={block.src} label={block.label} />
 
+    case 'gallery':
+      return (
+        <div key={index} className="media-gallery">
+          {block.images.map((img, i) => (
+            <figure key={i} className="media-gallery__item">
+              <img src={img.src} alt={img.alt ?? ''} loading="lazy" />
+              {img.caption && <figcaption>{img.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      )
+
     case 'media':
       return block.src
         ? (
