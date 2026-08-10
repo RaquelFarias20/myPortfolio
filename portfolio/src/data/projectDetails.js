@@ -88,19 +88,19 @@ export const projectDetails = {
         type: "list",
         content: [
           "<strong>Signup questionnaire metadata cleanup</strong> — standardized tracking across two duplicate questionnaire flows so funnel data could be compared apples-to-apples",
-          "<strong>Signup flow metadata</strong> — added step-level context so the same event (e.g. “signup complete”) could be understood in terms of where in the journey it happened, not just where in the app",
-          "<strong>Feature usage instrumentation</strong> — added usage tracking across five core surfaces: Study, Notes, Tasks, Themes, and Grades. Study — the AI-powered surface tied most directly to the paid plans — anchored the trial-to-paid funnel, so getting its tracking right mattered beyond just usage reporting",
+          "<strong>Signup flow metadata</strong> — added step-level context so the same event (e.g. &ldquo;signup complete&rdquo;) could be understood in terms of where in the journey it happened, not just where in the app",
+          "<strong>Feature usage instrumentation</strong> — added paired intent + completion tracking across five core surfaces: Study, Notes, Tasks, Themes, and Grades. Study — the AI-powered surface tied most directly to the paid plans — anchored the trial-to-paid funnel, so getting its tracking right mattered beyond just usage reporting",
         ],
       },
       {
         type: "paragraph",
         content:
-          "Rather than defaulting to one approach, I chose between intent and completion per event, based on the actual question that event needed to answer. For Study, tracking fired on user intent — the moment someone committed to the upload action — because the question was “did the user attempt this,” and completion would have silently undercounted real engagement whenever the pipeline failed. For the other four surfaces, tracking fired on completion — after the action’s backend call succeeded — because the question there was whether a value-delivering outcome actually happened, not just whether it was attempted. That case-by-case reasoning, rather than a fixed rule, became the basis for defending each decision in review.",
+          "Rather than picking a single tracking approach, each feature got two connected events: an intent event, fired the moment a user initiated the action, and a completion event, fired only once that action actually succeeded. That pairing meant every feature's funnel could show not just how many people used it, but exactly where the drop-off happened between starting and finishing — the gap between the two events is itself the signal, which a single event of either type can't give you. For Study specifically, this also meant instrumenting both variants of an A/B-tested upload modal so the intent event wouldn't silently lose half the experiment population.",
       },
       {
         type: "embed",
         src: "/blueprints/bettercampus-intent.html",
-        label: "Tracking approach: intent vs. completion",
+        label: "Tracking approach: pairing intent with completion",
       },
 
       // ── Custom Tooling ────────────────────────────────────────────
