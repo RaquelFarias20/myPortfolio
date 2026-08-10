@@ -82,20 +82,20 @@ export const projectDetails = {
       {
         type: "paragraph",
         content:
-          "With the taxonomy defined, I moved into three connected engineering streams:",
+          "Once the taxonomy was defined, I moved into three connected engineering streams:",
       },
       {
         type: "list",
         content: [
-          "<strong>Signup questionnaire metadata cleanup</strong> — standardized tracking across the two duplicate questionnaire flows so funnel data could be compared apples-to-apples",
-          "<strong>Signup flow metadata</strong> — added <code>flow_type</code> / <code>flow_step</code> properties so the same event (e.g. &ldquo;signup complete&rdquo;) could be understood in the context of where in the journey it happened, not just where in the app",
-          "<strong>Feature usage instrumentation</strong> — added <code>feature_used</code> tracking across five core surfaces: Study (file uploads), Notes (creation, including a voice-transcription path a bug report had missed), Tasks (drag-and-drop planning), Themes (swap + apply), and Grades (goal-setting)",
+          "<strong>Signup questionnaire metadata cleanup</strong> — standardized tracking across two duplicate questionnaire flows so funnel data could be compared apples-to-apples",
+          "<strong>Signup flow metadata</strong> — added step-level context so the same event (e.g. “signup complete”) could be understood in terms of where in the journey it happened, not just where in the app",
+          "<strong>Feature usage instrumentation</strong> — added usage tracking across five core surfaces: Study, Notes, Tasks, Themes, and Grades. Study — the AI-powered surface tied most directly to the paid plans — anchored the trial-to-paid funnel, so getting its tracking right mattered beyond just usage reporting",
         ],
       },
       {
         type: "paragraph",
         content:
-          "The most important engineering decision was <strong>separating intent from completion</strong>. For Study uploads, the event fires on user intent (clicking Upload/Continue) rather than on successful file processing — because the product question was \"did the user attempt this,\" not \"did the pipeline succeed.\" That distinction shaped where each event lived in the code and became the basis for defending the approach in code review, along with instrumenting both variants of an A/B-tested upload modal so we wouldn't silently lose half the experiment population.",
+          "Rather than defaulting to one approach, I chose between intent and completion per event, based on the actual question that event needed to answer. For Study, tracking fired on user intent — the moment someone committed to the upload action — because the question was “did the user attempt this,” and completion would have silently undercounted real engagement whenever the pipeline failed. For the other four surfaces, tracking fired on completion — after the action’s backend call succeeded — because the question there was whether a value-delivering outcome actually happened, not just whether it was attempted. That case-by-case reasoning, rather than a fixed rule, became the basis for defending each decision in review.",
       },
       {
         type: "embed",
