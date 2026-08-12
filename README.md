@@ -23,6 +23,9 @@ Industrial & Product Designer with a focus on UX/UI, Human-Centered Design, and 
 
 ## Built with
 
+**Languages:** JavaScript (JSX), CSS, HTML
+
+**Libraries & tooling:**
 - **React 18** + **Vite** — component-based SPA with fast dev server
 - **React Router v7** — client-side routing
 - **Framer Motion** — page and section animations
