@@ -456,6 +456,88 @@ export const projectDetails = {
     next: { id: "nyu-marketplace", title: "Apparel Rental Marketplace" },
   },
 
+  "nyu-marketplace": {
+    id: "nyu-marketplace",
+    category: { title: "Product Management", hasDivider: false },
+    title: "Art Dealers — Apparel Rental Marketplace",
+    company: "NYU Startup Program — Innovation Lab",
+    role: "Founding Product Manager",
+    dateStart: "Jun 2025",
+    dateEnd: "Dec 2025",
+    tags: ["UX Strategy", "Marketplace", "MVP"],
+
+    body: [
+      {
+        type: "statement",
+        content:
+          "A peer-to-peer apparel rental marketplace for New York City — built from zero by a two-person team, from an entrepreneur's vision to a live, working MVP.",
+      },
+
+      // ── The Opportunity ───────────────────────────────────────────
+      { type: "heading", content: "The Opportunity" },
+      {
+        type: "paragraph",
+        content:
+          "Art Dealers is a peer-to-peer apparel rental marketplace where people can rent and lend standout pieces to each other instead of buying for a single occasion, starting with the New York City metro area. The entrepreneur had the vision — but needed someone to turn it into an actual product.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "I came on as the founding Product Manager, working in close, ongoing collaboration with a single developer to take the idea from concept to a live, working MVP. There was no existing team process to inherit, so I built the product foundation from scratch: from what the site would look like to how the rental transaction itself would actually work.",
+      },
+
+      // ── Process ───────────────────────────────────────────────────
+      { type: "heading", content: "Process" },
+      {
+        type: "process-flow",
+        steps: [
+          { label: "Site Architecture & Mockups", color: "#1535b8", textColor: "#fff" },
+          { label: "Sprint Planning", color: "#2a4de0", textColor: "#fff" },
+          { label: "Operational Logic & Cost Model", color: "#6b84e8", textColor: "#fff" },
+          { label: "Deploy", color: "#9fb0f0", textColor: "#fff" },
+          { label: "Beta Testing", color: "#c5d0f5", textColor: "#1a3aad" },
+        ],
+      },
+
+      // ── What I Built ──────────────────────────────────────────────
+      { type: "heading", content: "What I Built" },
+      {
+        type: "list",
+        content: [
+          "<strong>Mockups and site architecture</strong> — designed the mockups and overall information architecture for the marketplace, giving the developer a clear, buildable spec to work from rather than a loose concept",
+          "<strong>Sprint planning</strong> — defined the sprints for our two-person team, sequencing the work so we moved from concept to a testable product in a logical order",
+          "<strong>End-to-end UX flows</strong> — mapped the full user experience across both sides of the marketplace — renting and lending — so every screen had a clear place in the larger journey",
+          "<strong>Rental logic and cost model</strong> — worked through the rental transaction step by step: a user places an order, I defined the SLA and timing expectations, mapped the fulfillment workflow, and participated in building out the cost logic behind each rental. Getting this right mattered because it is what makes a peer-to-peer rental transaction feel trustworthy on both sides",
+        ],
+      },
+
+      // ── Key Contributions ─────────────────────────────────────────
+      { type: "heading", content: "Key Contributions" },
+      {
+        type: "list",
+        content: [
+          "Led end-to-end development of a peer-to-peer rental marketplace from concept to live product",
+          "Designed core marketplace systems including listings, availability, booking logic, and pricing models",
+          "Optimized user flows across the booking funnel — discovery → booking → checkout — to improve conversion",
+        ],
+      },
+
+      // ── Current State ─────────────────────────────────────────────
+      { type: "heading", content: "Current State" },
+      {
+        type: "paragraph",
+        content:
+          "The MVP is built and live in beta, currently being tested in the NYC metro area while the team works through final adjustments ahead of a broader launch.",
+      },
+    ],
+
+    links: [
+      { label: "Live product — myartdealers.com", href: "https://myartdealers.com", primary: true },
+    ],
+    prev: { id: "un-ai-safety", title: "AI Engineer & Platform Lead" },
+    next: { id: "ex-squared-ux", title: "Senior UX Designer" },
+  },
+
   "subastas-ventura": {
     id: "subastas-ventura",
     category: { title: "Technology Consultant", hasDivider: false },

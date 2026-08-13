@@ -171,6 +171,8 @@ export default function ProjectPanel({ body, links }) {
             <Link
               key={link.label}
               to={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`link-btn${link.primary ? ' primary' : ''}`}
             >
               {link.label}
