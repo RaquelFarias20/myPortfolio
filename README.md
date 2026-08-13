@@ -31,7 +31,7 @@ Industrial & Product Designer with a focus on UX/UI, Human-Centered Design, and 
 - **Framer Motion** — page and section animations
 - **Lenis** — smooth scroll
 
-No UI framework, no component library — all styles are hand-written CSS with a custom design system.
+All styles are hand-written CSS with a custom design system.
 
 ---
 
