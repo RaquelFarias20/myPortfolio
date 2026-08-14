@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
 import ProjectsPage from './pages/ProjectsPage.jsx'
 import ProjectDetailPage from './pages/ProjectDetailPage.jsx'
 import CustomCursor from './components/ui/CustomCursor.jsx'
@@ -15,6 +16,7 @@ export default function App() {
       <CustomCursor />
       <Routes>
         <Route path="/"              element={<HomePage />} />
+        <Route path="/about"         element={<AboutPage />} />
         <Route path="/projects"      element={<ProjectsPage />} />
         <Route path="/projects/:id"  element={<ProjectDetailPage />} />
       </Routes>
