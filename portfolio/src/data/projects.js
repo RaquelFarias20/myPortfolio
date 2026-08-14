@@ -29,7 +29,7 @@ export const projects = [
   {
     id: "nyu-marketplace",
     category: "product-management",
-    role: "Founding Product Manager",
+    role: "Founding Product & Program Manager",
     company: "NYU Startup Program — Innovation Lab",
     description:
       "Led a peer-to-peer apparel-rental marketplace from concept to MVP,  shaping the business opportunity, running customer and competitive research, and designing end-to-end trust, discovery, and transaction flows.",
@@ -69,7 +69,7 @@ export const projects = [
   {
     id: "subastas-ventura",
     category: "technology-consultant",
-    role: "Innovation Analyst / UX Designer",
+    role: "UX Designer & Innovation Analyst",
     company: "Subastas Ventura",
     description:
       "Led product-improvement initiatives across automotive digital platforms, facilitating cross-functional workshops and strengthening the connection between online discovery and offline operations for an e-commerce business with physical inventory.",
