@@ -15,7 +15,7 @@ export const projects = [
   {
     id: "un-ai-safety",
     category: "analytics-ai",
-    role: "AI Engineer & Platform Lead",
+    role: "UX Program Lead & AI Platform AI Engineer",
     company: "United Nations - International Computing Center (ICC)",
     description:
       "Led the winning team designing a zero-to-one AI evaluation platform, translating complex AI-safety workflows into intake flows, review states, and reporting experiences, prototyped with LLM-powered tools and structured JSON/PDF outputs.",
