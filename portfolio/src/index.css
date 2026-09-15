@@ -966,6 +966,20 @@ header {
   letter-spacing: 0.04em;
 }
 
+.media-placeholder-wrap {
+  margin: 20px 0;
+}
+.media-placeholder-wrap .media {
+  margin: 0;
+}
+.media-placeholder-caption {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 10px 0 4px;
+  letter-spacing: 0.04em;
+}
+
 .media-gallery {
   display: flex;
   flex-direction: column;
@@ -989,6 +1003,17 @@ header {
   text-align: center;
   padding: 8px 0 6px;
   letter-spacing: 0.04em;
+}
+.media-gallery--columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  flex-direction: unset;
+}
+@media (max-width: 600px) {
+  .media-gallery--columns {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── Links row ── */

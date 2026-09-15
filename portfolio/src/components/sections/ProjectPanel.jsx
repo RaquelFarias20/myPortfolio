@@ -121,7 +121,7 @@ function renderBlock(block, index) {
 
     case 'gallery':
       return (
-        <div key={index} className="media-gallery">
+        <div key={index} className={`media-gallery${block.layout === 'columns' ? ' media-gallery--columns' : ''}`}>
           {block.images.map((img, i) => (
             <figure key={i} className="media-gallery__item">
               <img src={img.src} alt={img.alt ?? ''} loading="lazy" />
@@ -145,9 +145,12 @@ function renderBlock(block, index) {
           </figure>
         )
         : (
-          <div key={index} className="media">
-            <span>{block.content}</span>
-          </div>
+          <figure key={index} className="media-placeholder-wrap">
+            <div className="media">
+              <span>{block.content}</span>
+            </div>
+            {block.caption && <figcaption className="media-placeholder-caption">{block.caption}</figcaption>}
+          </figure>
         )
 
     default:

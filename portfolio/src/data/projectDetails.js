@@ -108,13 +108,13 @@ export const projectDetails = {
       {
         type: "paragraph",
         content:
-          "Dashboards answer \"what's happening now,\" but the team also needed a way to turn raw Stripe exports into a trustworthy recurring report without manual spreadsheet work every week. I built a <strong>Python/pandas CLI tool</strong> that:",
+          'Dashboards answer "what\'s happening now," but the team also needed a way to turn raw Stripe exports into a trustworthy recurring report without manual spreadsheet work every week. I built a <strong>Python/pandas CLI tool</strong> that:',
       },
       {
         type: "list",
         content: [
           "Ingests Stripe subscription exports (CSV/XLSX)",
-          "Applies a canonical definition of \"active paying\" vs. \"active with a pending cancellation request\" — encoding the business's actual logic directly rather than leaving it to manual interpretation each run",
+          'Applies a canonical definition of "active paying" vs. "active with a pending cancellation request" — encoding the business\'s actual logic directly rather than leaving it to manual interpretation each run',
           "Computes MRR (normalizing annual plans to a monthly equivalent), subscriber tenure (mean, median, P75, P90), cohort breakdowns by signup month, and trial-length distributions",
           "Parses free-text cancellation feedback into a reason distribution",
           "Outputs a clean, multi-tab Excel report on a single command",
@@ -177,7 +177,7 @@ export const projectDetails = {
       {
         type: "paragraph",
         content:
-          "The technical work here was straightforward — event tracking, SQL, pandas. What made it valuable was resisting the urge to just \"add more tracking\" and instead first asking what was already there, what could be trusted, and what specific business questions needed answering. The most useful output wasn't a dashboard — it was a small set of flagged, well-evidenced problems that the team could act on immediately.",
+          'The technical work here was straightforward — event tracking, SQL, pandas. What made it valuable was resisting the urge to just "add more tracking" and instead first asking what was already there, what could be trusted, and what specific business questions needed answering. The most useful output wasn\'t a dashboard — it was a small set of flagged, well-evidenced problems that the team could act on immediately.',
       },
     ],
 
@@ -491,9 +491,17 @@ export const projectDetails = {
       {
         type: "process-flow",
         steps: [
-          { label: "Site Architecture & Mockups", color: "#1535b8", textColor: "#fff" },
+          {
+            label: "Site Architecture & Mockups",
+            color: "#1535b8",
+            textColor: "#fff",
+          },
           { label: "Sprint Planning", color: "#2a4de0", textColor: "#fff" },
-          { label: "Operational Logic & Cost Model", color: "#6b84e8", textColor: "#fff" },
+          {
+            label: "Operational Logic & Cost Model",
+            color: "#6b84e8",
+            textColor: "#fff",
+          },
           { label: "Deploy", color: "#9fb0f0", textColor: "#fff" },
           { label: "Beta Testing", color: "#c5d0f5", textColor: "#1a3aad" },
         ],
@@ -532,10 +540,208 @@ export const projectDetails = {
     ],
 
     links: [
-      { label: "Live product — myartdealers.com", href: "https://myartdealers.com", primary: true },
+      {
+        label: "Live product — myartdealers.com",
+        href: "https://myartdealers.com",
+        primary: true,
+      },
     ],
     prev: { id: "un-ai-safety", title: "AI Engineer & Platform Lead" },
     next: { id: "ex-squared-ux", title: "Senior UX Designer" },
+  },
+
+  "ex-squared-ux": {
+    id: "ex-squared-ux",
+    category: { title: "UX/UI", hasDivider: false },
+    title: "Customer Delivery Platform",
+    company: "Ex Squared",
+    role: "Senior User Experience Designer / Product Owner",
+    dateStart: "Sep 2022",
+    dateEnd: "Mar 2024",
+    tags: ["UX/UI", "Product Owner", "Research"],
+
+    body: [
+      {
+        type: "statement",
+        content:
+          "A client in offshore energy services had no single system tracking their service operations. Updates from on-site crews arrived by email and phone, and no one inside sales, operations, or the client organization had real visibility into what was actually happening on a job as it progressed.",
+      },
+
+      // ── The Project ───────────────────────────────────────────────
+      { type: "heading", content: "The Project" },
+      {
+        type: "paragraph",
+        content:
+          "Ex Squared was engaged on a Fortune 500 company to build the client's Customer Delivery Platform from scratch: the system behind how the client coordinated and tracked service operations end to end.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Before this platform existed, the process ran through a legacy setup. The touchpoints that mattered most, like updates from the crew performing a service on-site, came in through email and phone calls instead of being captured anywhere structured. As a result, sales, operations, and the client had almost no traceability into what was happening on a job as it progressed. The only visibility anyone had was a thin status stepper with three states: start, in process, end. Nothing about what was happening in between, beyond piecing it together from an email thread.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "I worked across this build in two capacities: as Senior UX Designer on the platform broadly, and as Product Owner for a specific epic within it called POSTS.",
+      },
+
+      // ── Process ───────────────────────────────────────────────────
+      { type: "heading", content: "Process" },
+      {
+        type: "process-flow",
+        steps: [
+          { label: "Research", color: "#0D1F2D", textColor: "#fff" },
+          { label: "UX Design", color: "#1B3A52", textColor: "#fff" },
+          { label: "Product Ownership", color: "#2E6B8A", textColor: "#fff" },
+          { label: "Validation", color: "#6AACBF", textColor: "#0D1F2D" },
+        ],
+      },
+
+      // ── As Senior UX Designer ─────────────────────────────────────
+      { type: "heading", content: "As Senior UX Designer" },
+      {
+        type: "paragraph",
+        content:
+          "I owned projects end to end, from early problem framing and stakeholder collaboration through high-fidelity design and developer handoff. This spanned:",
+      },
+      {
+        type: "list",
+        content: [
+          "<strong>Shaping problem spaces:</strong> contributing to problem definition, competitive analysis, writing user needs, and synthesizing research insights",
+          "<strong>Creating artifacts:</strong> user flows, wireframes, prototypes, and high-fidelity UI designs",
+          "<strong>Collaborating closely</strong> with designers, product managers, growth strategists, and engineers to clarify scope, explore solutions, and ensure designs met both user and business needs",
+          "<strong>Championing user needs and business goals</strong> while balancing technical constraints",
+          "<strong>Presenting and communicating</strong> design decisions clearly to stakeholders",
+          "<strong>Building and iterating</strong> on the platform's design system",
+        ],
+      },
+      {
+        type: "gallery",
+        layout: "columns",
+        images: [
+          {
+            src: "/images/Mobile%201%20Final.png",
+            alt: "Mobile wireframe screen 1",
+            caption: "Schedule Page",
+          },
+          {
+            src: "/images/Mobile%202%20final.png",
+            alt: "Mobile wireframe screen 2",
+            caption: "Requeste Page",
+          },
+          {
+            src: "/images/Mobile%203%20final.png",
+            alt: "Mobile wireframe screen 3",
+            caption: "Service Details Page",
+          },
+        ],
+      },
+
+      // ── As Product Owner — POSTS ──────────────────────────────────
+      { type: "heading", content: "As Product Owner — POSTS" },
+      {
+        type: "paragraph",
+        content:
+          "I owned the POSTS epic: building a live communication channel that gave every operation transparent, real-time tracking from request to completion.",
+      },
+      {
+        type: "paragraph",
+        content: "<strong>Research</strong>",
+      },
+      {
+        type: "list",
+        content: [
+          "Interviewed crew members directly on-site to understand what they actually needed",
+          "Reviewed existing handoff process plans and workflow policies to pinpoint where breakdowns were happening",
+        ],
+      },
+      {
+        type: "paragraph",
+        content: "<strong>Ownership</strong>",
+      },
+      {
+        type: "list",
+        content: [
+          "Developed the vision for the epic, broke it into user stories, and prioritized by impact",
+          "Built the roadmap and timeline together with the software development team",
+        ],
+      },
+      {
+        type: "paragraph",
+        content: "<strong>What we built</strong>",
+      },
+      {
+        type: "list",
+        content: [
+          "A live tracker showing real-time operation status, for example crew en route",
+          "A Posts feed capturing anything that came up directly in the field. If a crew needed additional equipment mid-job, it got logged and tagged in Posts, automatically notifying operations and sales so they could adjust invoicing or added costs in real time rather than finding out after the fact",
+          "Personalized threads, not automated messages: each operation had its own dedicated thread with an assigned client representative, so the customer always knew exactly who they were talking to",
+        ],
+      },
+      {
+        type: "paragraph",
+        content: "<strong>Validation</strong>",
+      },
+      {
+        type: "list",
+        content: [
+          "Continuous testing and interactive prototypes to validate the design with stakeholders and users before launch",
+          "Monitored performance post-launch",
+        ],
+      },
+      {
+        type: "media",
+        src: "/images/Post%201%20.png",
+        alt: "POSTS epic: live tracker UI and Posts feed screens",
+        caption: "POSTS — Live tracker and feed",
+      },
+
+      // ── Outcomes ──────────────────────────────────────────────────
+      { type: "heading", content: "Outcomes" },
+      {
+        type: "paragraph",
+        content: "<strong>POSTS results</strong>",
+      },
+      {
+        type: "list",
+        content: [
+          "Customer Satisfaction Score (measured via post-interaction survey): 3.2 to 4.8 in the first trial",
+          "Internal handoff clarifications cut by 40%: operations and sales no longer had to chase down what happened on-site",
+        ],
+      },
+      {
+        type: "paragraph",
+        content: "<strong>Engagement-wide</strong>",
+      },
+      {
+        type: "list",
+        content: [
+          "25-point NPS increase across the broader engagement. POSTS contributed to this by giving the client live visibility they did not have before, and the increase also reflects tightened cross-team coordination and delivery over the course of the engagement as a whole",
+        ],
+      },
+
+      // ── Gallery ───────────────────────────────────────────────────
+      { type: "heading", content: "Gallery" },
+      {
+        type: "media",
+        src: "/images/UX%20-%20Buttons%20.png",
+        alt: "UX design - Buttons",
+        caption: "Design System — Buttons",
+      },
+      {
+        type: "media",
+        src: "/images/Details%20Page%202.png",
+        alt: "Details page design",
+        caption: "Details Page",
+      },
+    ],
+
+    links: [],
+    prev: { id: "nyu-marketplace", title: "Art Dealers" },
+    next: {
+      id: "subastas-ventura",
+      title: "Car Crane Drivers' Software Ecosystem",
+    },
   },
 
   "subastas-ventura": {
@@ -695,7 +901,7 @@ export const projectDetails = {
     ],
 
     links: [],
-    prev: { id: "elipsis-fintech", title: "Elipsis (Mercado Libre ecosystem)" },
+    prev: { id: "ex-squared-ux", title: "Customer Delivery Platform" },
     next: { id: "sai-design", title: "Sai Design & Image Consulting" },
   },
 

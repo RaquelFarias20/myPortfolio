@@ -68,7 +68,7 @@ export const projects = [
   },
   {
     id: "subastas-ventura",
-    category: "technology-consultant",
+    category: "ux-ui",
     role: "UX Designer & Innovation Analyst",
     company: "Subastas Ventura",
     description:
