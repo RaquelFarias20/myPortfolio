@@ -691,7 +691,7 @@ export const projectDetails = {
       },
       {
         type: "media",
-        src: "/images/Post%201%20.png",
+        src: "/images/Desktop%20Post%201.png",
         alt: "POSTS epic: live tracker UI and Posts feed screens",
         caption: "POSTS — Live tracker and feed",
       },
