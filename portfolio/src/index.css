@@ -1294,6 +1294,26 @@ header {
   transition: width 0.35s ease, background 0.35s ease;
 }
 
+/* Mobile: contrast + power stack full-width; about/projects/contact form a horizontal nav bar */
+@media (max-width: 859px) {
+  .stat--bt {
+    flex: 0 0 100%;
+  }
+  .stat--about,
+  .stat--projects,
+  .stat--contact {
+    flex: 1;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  .stat--projects,
+  .stat--contact {
+    border-left: 1px solid var(--line);
+    padding-left: 16px;
+  }
+}
+
 /* Desktop ordering: about + projects left, contrast/power/contact pushed right */
 @media (min-width: 860px) {
   .stat--about    { order: 1; }
