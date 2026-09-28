@@ -305,8 +305,8 @@ header {
    STATS NAV  (home page)
    ═══════════════════════════════════════════════════════════════ */
 .stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 24px;
   padding: 32px 0;
   border-top: 1px solid var(--line);
@@ -1294,16 +1294,13 @@ header {
   transition: width 0.35s ease, background 0.35s ease;
 }
 
-/* Desktop ordering: contrast + power appear after photography.
-   On mobile the DOM order already puts them first (no override needed). */
+/* Desktop ordering: about + projects left, contrast/power/contact pushed right */
 @media (min-width: 860px) {
-  .stat--about        { order: 1; }
-  .stat--projects     { order: 2; }
-  .stat--illustration { order: 3; }
-  .stat--photography  { order: 4; }
-  .stat--contrast     { order: 5; }
-  .stat--power        { order: 6; }
-  .stat--contact      { order: 7; }
+  .stat--about    { order: 1; }
+  .stat--projects { order: 2; }
+  .stat--contrast { order: 3; margin-left: auto; }
+  .stat--power    { order: 4; }
+  .stat--contact  { order: 5; }
 }
 
 /* Tooltip trigger — small italic i button */
