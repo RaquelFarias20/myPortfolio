@@ -1,6 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import MiCasaScreenViewer from '../ui/MiCasaScreenViewer.jsx'
+import { micasaScreens } from '../../data/micasaScreens.js'
 
 function EmbedFrame({ src, label }) {
   const ref = useRef(null)
@@ -23,7 +26,70 @@ function EmbedFrame({ src, label }) {
   )
 }
 
-function renderBlock(block, index) {
+function Lightbox({ images, startIndex, onClose }) {
+  const [index, setIndex] = useState(startIndex)
+  const img = images[index]
+  const hasPrev = index > 0
+  const hasNext = index < images.length - 1
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape')      onClose()
+      if (e.key === 'ArrowRight' && hasNext) setIndex(i => i + 1)
+      if (e.key === 'ArrowLeft'  && hasPrev) setIndex(i => i - 1)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [hasPrev, hasNext, onClose])
+
+  return createPortal(
+    <div className="lightbox" onClick={onClose} role="dialog" aria-modal="true">
+      <button className="lightbox__close" onClick={onClose} aria-label="Close">&#x2715;</button>
+
+      {hasPrev && (
+        <button
+          className="lightbox__arrow lightbox__arrow--prev"
+          onClick={e => { e.stopPropagation(); setIndex(i => i - 1) }}
+          aria-label="Previous image"
+        >&#8249;</button>
+      )}
+
+      <div className="lightbox__content" onClick={e => e.stopPropagation()}>
+        <img src={img.src} alt={img.alt ?? ''} />
+        {img.caption && <p className="lightbox__caption">{img.caption}</p>}
+      </div>
+
+      {hasNext && (
+        <button
+          className="lightbox__arrow lightbox__arrow--next"
+          onClick={e => { e.stopPropagation(); setIndex(i => i + 1) }}
+          aria-label="Next image"
+        >&#8250;</button>
+      )}
+
+      {images.length > 1 && (
+        <div className="lightbox__dots">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              className={`lightbox__dot${i === index ? ' active' : ''}`}
+              onClick={e => { e.stopPropagation(); setIndex(i) }}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>,
+    document.body
+  )
+}
+
+function renderBlock(block, index, openLightbox) {
   switch (block.type) {
     case 'heading':
       return <h2 key={index} className="panel-h2">{block.content}</h2>
@@ -119,11 +185,18 @@ function renderBlock(block, index) {
     case 'embed':
       return <EmbedFrame key={index} src={block.src} label={block.label} />
 
+    case 'screen-viewer':
+      return <MiCasaScreenViewer key={index} screens={micasaScreens} />
+
     case 'gallery':
       return (
         <div key={index} className={`media-gallery${block.layout === 'columns' ? ' media-gallery--columns' : ''}`}>
           {block.images.map((img, i) => (
-            <figure key={i} className="media-gallery__item">
+            <figure
+              key={i}
+              className="media-gallery__item media-gallery__item--zoomable"
+              onClick={() => openLightbox(block.images, i)}
+            >
               <img src={img.src} alt={img.alt ?? ''} loading="lazy" />
               {img.caption && <figcaption>{img.caption}</figcaption>}
             </figure>
@@ -159,6 +232,14 @@ function renderBlock(block, index) {
 }
 
 export default function ProjectPanel({ body, links }) {
+  const [lightbox, setLightbox] = useState(null)
+
+  const openLightbox = useCallback((images, startIndex) => {
+    setLightbox({ images, startIndex })
+  }, [])
+
+  const closeLightbox = useCallback(() => setLightbox(null), [])
+
   return (
     <motion.div
       className="panel"
@@ -166,7 +247,7 @@ export default function ProjectPanel({ body, links }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: 'easeOut', delay: 0.1 }}
     >
-      {body.map((block, i) => renderBlock(block, i))}
+      {body.map((block, i) => renderBlock(block, i, openLightbox))}
 
       {links?.length > 0 && (
         <div className="panel-links">
@@ -182,6 +263,14 @@ export default function ProjectPanel({ body, links }) {
             </Link>
           ))}
         </div>
+      )}
+
+      {lightbox && (
+        <Lightbox
+          images={lightbox.images}
+          startIndex={lightbox.startIndex}
+          onClose={closeLightbox}
+        />
       )}
     </motion.div>
   )

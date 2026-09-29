@@ -41,6 +41,18 @@ export const projects = [
 
   // ── UX/UI Projects ─────────────────────────────────────────────
   {
+    id: "micasa-hackathon",
+    category: "ux-ui",
+    role: "UX/Product Designer",
+    company: "MiCasa Hackathon",
+    description:
+      "Designed the product strategy and UX for a cultural experiences platform at a hackathon, treating MiCasa as social infrastructure rather than an event ticketing app. Won Best Pitch and Best Solution.",
+    tags: ["UX/UI", "Product Strategy", "Hackathon"],
+    href: "/projects/micasa-hackathon",
+    dateStart: "2025-06",
+    dateEnd: "2025-06",
+  },
+  {
     id: "ex-squared-ux",
     category: "ux-ui",
     role: "Senior User Experience Designer",

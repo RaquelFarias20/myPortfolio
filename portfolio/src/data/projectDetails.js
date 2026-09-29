@@ -547,7 +547,84 @@ export const projectDetails = {
       },
     ],
     prev: { id: "un-ai-safety", title: "AI Engineer & Platform Lead" },
-    next: { id: "ex-squared-ux", title: "Senior UX Designer" },
+    next: { id: "micasa-hackathon", title: "MiCasa: Cultural Experiences Platform" },
+  },
+
+  "micasa-hackathon": {
+    id: "micasa-hackathon",
+    category: { title: "UX/UI", hasDivider: false },
+    title: "MiCasa: Cultural Experiences Platform",
+    company: "MiCasa Hackathon",
+    role: "UX/Product Designer",
+    dateStart: "Jun 2025",
+    dateEnd: "Jun 2025",
+    tags: ["UX/UI", "Product Strategy", "Hackathon"],
+
+    body: [
+      // Video — add YouTube embed URL when ready
+      // {
+      //   type: "video",
+      //   src: "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+      //   alt: "MiCasa hackathon presentation",
+      //   caption: "MiCasa — Hackathon Pitch",
+      // },
+
+      // ── The Challenge ─────────────────────────────────────────────
+      { type: "heading", content: "The Challenge" },
+      {
+        type: "paragraph",
+        content:
+          "MiCasa connects local hosts, local talent, and private spaces to create intimate cultural experiences, like a living-room concert or a small show in someone's home. The hackathon asked a specific design and business strategy question: how could MiCasa grow beyond a place to find one-off events?",
+      },
+
+      // ── My Approach ───────────────────────────────────────────────
+      { type: "heading", content: "My Approach" },
+      {
+        type: "paragraph",
+        content:
+          "My answer was to treat MiCasa as social infrastructure for culture, not only an event platform. The goal was a product where hosts, artists, and audiences keep coming back because they are part of something ongoing, not just buying a ticket.",
+      },
+
+      // ── Process ───────────────────────────────────────────────────
+      { type: "heading", content: "Process" },
+      {
+        type: "process-flow",
+        steps: [
+          { label: "Framing",           color: "#1C0A30", textColor: "#fff" },
+          { label: "Event Flows",       color: "#4A1878", textColor: "#fff" },
+          { label: "Revenue Model",     color: "#C47A14", textColor: "#fff" },
+          { label: "Engagement Design", color: "#F5A420", textColor: "#1C0A30" },
+        ],
+      },
+
+      // ── Key Decisions ─────────────────────────────────────────────
+      { type: "heading", content: "Key Decisions" },
+      {
+        type: "list",
+        content: [
+          "<strong>Collaborative event creation.</strong> I designed flows that let people either start an event or join one someone else has already started, so one person no longer has to bring the space, the talent, and the audience alone.",
+          "<strong>Transparent revenue sharing.</strong> When several people contribute to an event, trust depends on everyone seeing how the money splits. I built revenue sharing into the creation flow so it is clear from the beginning, not settled after the fact.",
+          "<strong>Recurring engagement.</strong> I designed features that encourage people to return and feel emotionally connected after the show ends, so a single event can grow into an ongoing community.",
+          "<strong>A clear entry point for every role.</strong> The home screen asks \"What do you want to do today?\" and routes people by intent: discover events, start or help organize one, host with your own space, or get updates without creating an account.",
+        ],
+      },
+
+      // ── Screens ──────────────────────────────────────────────────
+      { type: "heading", content: "Screens" },
+      { type: "screen-viewer" },
+
+      // ── Outcomes ─────────────────────────────────────────────────
+      { type: "heading", content: "Outcomes" },
+      {
+        type: "paragraph",
+        content:
+          "MiCasa was selected as the winning project. I received both <strong>Best Pitch</strong> and <strong>Best Solution</strong> awards.",
+      },
+    ],
+
+    links: [],
+    prev: { id: "nyu-marketplace", title: "Art Dealers" },
+    next: { id: "ex-squared-ux",   title: "Customer Delivery Platform" },
   },
 
   "ex-squared-ux": {
@@ -737,7 +814,7 @@ export const projectDetails = {
     ],
 
     links: [],
-    prev: { id: "nyu-marketplace", title: "Art Dealers" },
+    prev: { id: "micasa-hackathon", title: "MiCasa: Cultural Experiences Platform" },
     next: {
       id: "subastas-ventura",
       title: "Car Crane Drivers' Software Ecosystem",
