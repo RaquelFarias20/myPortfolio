@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 // ── Constants ─────────────────────────────────────────────────────────
 const DESKTOP_W = 380
 const MOBILE_W  = 190
-const LABEL_H   = 26
+const LABEL_H   = 44
 const FRAME_GAP = 40
 const MIN_SCALE = 0.15
 const MAX_SCALE = 3.5
@@ -17,7 +17,7 @@ function dispSize(screen) {
 function mobileLayout(screens) {
   const pos = {}
   let dy = 0, my = 0
-  screens.filter(s => s.kind === 'desktop').forEach(s => { pos[s.id] = { x: 0,                  y: dy }; dy += dispSize(s).h + FRAME_GAP })
+  screens.filter(s => s.kind === 'desktop').forEach(s => { pos[s.id] = { x: 0,                    y: dy }; dy += dispSize(s).h + FRAME_GAP })
   screens.filter(s => s.kind === 'mobile' ).forEach(s => { pos[s.id] = { x: DESKTOP_W + FRAME_GAP, y: my }; my += dispSize(s).h + FRAME_GAP })
   return pos
 }
@@ -28,8 +28,6 @@ function exitFull()       { return document.exitFullscreen?.() ?? document.webki
 function isFull()         { return !!(document.fullscreenElement || document.webkitFullscreenElement) }
 
 // ── Icons ─────────────────────────────────────────────────────────────
-function IconSelect()   { return <svg width="11" height="13" viewBox="0 0 11 13" fill="currentColor" aria-hidden="true"><path d="M0.5 0.5l3.8 11.5 1.9-4.3 4.3-1.9L0.5 0.5z"/></svg> }
-function IconHand()     { return <svg width="13" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-4 0v0"/><path d="M14 10V4a2 2 0 0 0-4 0v2"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg> }
 function IconPanel()    { return <svg width="14" height="11" viewBox="0 0 14 11" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true"><rect x="0.75" y="0.75" width="12.5" height="9.5" rx="1.25"/><line x1="4.5" y1="0.75" x2="4.5" y2="10.25"/></svg> }
 function IconExpand()   { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> }
 function IconCollapse() { return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg> }
@@ -43,19 +41,14 @@ function ScreenProps({ screen }) {
   }
   return (
     <>
-      {/* Name + kind tag */}
       <div className="mcv-props__sect mcv-props__sect--name">
         <span className="mcv-props__name">{screen.name}</span>
         <span className="mcv-props__tag">{screen.kind === 'mobile' ? 'Mobile' : 'Desktop'}</span>
       </div>
-
-      {/* Description */}
       <div className="mcv-props__sect">
         <p className="mcv-props__sect-label">Description</p>
         <p className="mcv-props__desc">{screen.description}</p>
       </div>
-
-      {/* Size */}
       <div className="mcv-props__sect">
         <p className="mcv-props__sect-label">Size</p>
         <div className="mcv-props__dims">
@@ -63,8 +56,6 @@ function ScreenProps({ screen }) {
           <div className="mcv-props__dim"><span className="mcv-props__dim-key">H</span><span className="mcv-props__dim-val">{screen.height}</span></div>
         </div>
       </div>
-
-      {/* Colors */}
       {screen.colors?.length > 0 && (
         <div className="mcv-props__sect">
           <p className="mcv-props__sect-label">Colors</p>
@@ -84,17 +75,23 @@ function ScreenProps({ screen }) {
 }
 
 // ── ScreenFrame ───────────────────────────────────────────────────────
-function ScreenFrame({ screen, pos, selected, onClick, onDblClick }) {
+// data-screen-id lets onPointerUp identify which frame was clicked via .closest()
+function ScreenFrame({ screen, pos, selected, onTouchTap, onDblClick }) {
   const { w, h } = dispSize(screen)
   return (
     <div
+      data-screen-id={screen.id}
       className={`mcv-frame${selected ? ' mcv-frame--sel' : ''}${screen.image ? '' : ' mcv-frame--empty'}`}
       style={{ left: pos.x, top: pos.y + LABEL_H, width: w, height: h }}
       role="button" tabIndex={-1}
       aria-label={screen.name} aria-pressed={selected}
-      onClick={onClick} onDoubleClick={onDblClick}
+      onClick={onTouchTap}
+      onDoubleClick={onDblClick}
     >
-      <span className="mcv-frame__label">{screen.name}</span>
+      <div className="mcv-frame__meta">
+        <span className="mcv-frame__label">{screen.name}</span>
+        {screen.subtitle && <span className="mcv-frame__subtitle">{screen.subtitle}</span>}
+      </div>
       {screen.image
         ? <img src={screen.image} srcSet={screen.image2x ? `${screen.image} 1x, ${screen.image2x} 2x` : undefined} alt={screen.name} className="mcv-frame__img" loading="lazy" draggable={false} />
         : <div className="mcv-frame__placeholder"><span>[Screen export]</span></div>
@@ -105,31 +102,31 @@ function ScreenFrame({ screen, pos, selected, onClick, onDblClick }) {
 
 // ── MiCasaScreenViewer ────────────────────────────────────────────────
 export default function MiCasaScreenViewer({ screens }) {
-  const [tool,       setTool]       = useState('select')
   const [selectedId, setSelectedId] = useState(null)
   const [sheetOpen,  setSheetOpen]  = useState(false)
   const [panelOpen,  setPanelOpen]  = useState(false)
   const [isFullscr,  setIsFullscr]  = useState(false)
   const [isMobile,   setIsMobile]   = useState(() => window.innerWidth < MOBILE_BP)
 
-  const mcvRef     = useRef(null)
-  const wrapRef    = useRef(null)
-  const innerRef   = useRef(null)
-  const zoomRef    = useRef(null)
-  const toolRef    = useRef('select')
-  const focusedRef = useRef(false)
-  const txRef      = useRef({ x: 0, y: 0, scale: 1 })
-  const panRef      = useRef({ active: false, sx: 0, sy: 0, ox: 0, oy: 0 })
-  const pinchRef    = useRef({ dist: 0, mid: { x: 0, y: 0 } })
-  const touchMovRef = useRef(false)
-  const justPannedRef = useRef(false)
-  const wheelAcc   = useRef({ delta: 0, x: 0, y: 0, raf: null })
-  const prevPanel  = useRef(true)
+  const mcvRef            = useRef(null)
+  const wrapRef           = useRef(null)
+  const innerRef          = useRef(null)
+  const panelRef          = useRef(null)   // for transitionend
+  const zoomRef           = useRef(null)
+  const focusedRef        = useRef(false)
+  const txRef             = useRef({ x: 0, y: 0, scale: 1 })
+  const panRef            = useRef({ active: false, sx: 0, sy: 0, ox: 0, oy: 0 })
+  const pinchRef          = useRef({ dist: 0, mid: { x: 0, y: 0 } })
+  const touchMovRef       = useRef(false)
+  const pointerDownTarget = useRef(null)   // original e.target saved in onPointerDown
+  const draggedRef        = useRef(false)  // true once pointer moved > 6px
+  const wheelAcc          = useRef({ delta: 0, x: 0, y: 0, raf: null })
+  const prevPanel         = useRef(true)
+  const pendingZoomId     = useRef(null)   // screen id to zoom once panel finishes opening
 
   const selectedScreen = screens.find(s => s.id === selectedId) ?? null
 
-  useEffect(() => { toolRef.current = tool }, [tool])
-
+  // ── Transform helpers ─────────────────────────────────────────────────
   const applyTx = useCallback(t => {
     txRef.current = t
     if (innerRef.current) innerRef.current.style.transform = `translate(${t.x}px,${t.y}px) scale(${t.scale})`
@@ -156,29 +153,69 @@ export default function MiCasaScreenViewer({ screens }) {
     applyTx({ x: (width - cw*sc)/2 - x0*sc + pad*sc, y: (height - ch*sc)/2 - y0*sc + pad*sc, scale: sc })
   }, [screens, getPositions, applyTx])
 
-  const zoomToScreen = useCallback(id => {
+  // sheetH: height of the bottom sheet to exclude from vertical centering
+  const zoomToScreen = useCallback((id, sheetH = 0) => {
     const s = screens.find(x => x.id === id); const el = wrapRef.current
     if (!s || !el) return
     const pos = getPositions()[id]; if (!pos) return
     const { w, h } = dispSize(s)
     const { width, height } = el.getBoundingClientRect()
-    const sc = Math.min(width / (w * 1.15), height / (h * 1.15), 2.5)
-    applyTx({ x: width/2 - (pos.x + w/2)*sc, y: height/2 - (pos.y + LABEL_H + h/2)*sc, scale: sc })
+    const visH = height - sheetH
+    const sc = Math.min(width / (w * 1.15), visH / (h * 1.15), 2.5)
+    applyTx({ x: width/2 - (pos.x + w/2)*sc, y: visH/2 - (pos.y + LABEL_H + h/2)*sc, scale: sc })
   }, [screens, getPositions, applyTx])
 
+  // ── Unified selection handler ─────────────────────────────────────────
+  // Called from: mouse pointerUp, touch tap, sidebar row click.
+  // Opens the panel if closed, then zooms after its transition finishes.
+  const selectScreen = useCallback((id, sheetH = 0) => {
+    setSelectedId(id)
+    setSheetOpen(true)
+    // Check panel state via ref so we read the current DOM truth
+    const panelEl = panelRef.current
+    const panelIsOpen = panelEl && !panelEl.classList.contains('mcv__panel--collapsed')
+    if (panelIsOpen) {
+      zoomToScreen(id, sheetH)
+    } else {
+      pendingZoomId.current = id
+      setPanelOpen(true)
+      // zoomToScreen called by transitionend listener below
+    }
+  }, [zoomToScreen])
+
+  // ── Panel transitionend → zoom ─────────────────────────────────────────
+  // Fires once the panel width has settled at its final value.
+  // Guards against closing transitions (offsetWidth === 0).
   useEffect(() => {
-    const t = setTimeout(fitAll, 60)
+    const el = panelRef.current
+    if (!el) return
+    function onEnd(e) {
+      if (e.propertyName !== 'width') return
+      if (el.offsetWidth === 0) return  // was a close transition
+      const id = pendingZoomId.current
+      if (!id) return
+      pendingZoomId.current = null
+      zoomToScreen(id)
+    }
+    el.addEventListener('transitionend', onEnd)
+    return () => el.removeEventListener('transitionend', onEnd)
+  }, [zoomToScreen])
+
+  // ── Layout & resize ───────────────────────────────────────────────────
+  useEffect(() => {
+    const firstId = screens[0]?.id
+    const t = setTimeout(() => { if (firstId) zoomToScreen(firstId) }, 60)
     const onResize = () => {
       setIsMobile(prev => { const m = window.innerWidth < MOBILE_BP; return m !== prev ? m : prev })
       fitAll()
     }
     window.addEventListener('resize', onResize)
     return () => { clearTimeout(t); window.removeEventListener('resize', onResize) }
-  }, [fitAll])
+  }, [fitAll, zoomToScreen, screens])
 
   useEffect(() => { fitAll() }, [isMobile, fitAll])
 
-  // Fullscreen change
+  // ── Fullscreen change ─────────────────────────────────────────────────
   useEffect(() => {
     const onChange = () => {
       const full = isFull()
@@ -198,7 +235,7 @@ export default function MiCasaScreenViewer({ screens }) {
     }
   }, [fitAll])
 
-  // Wheel + touch (non-passive)
+  // ── Wheel + touch (non-passive) ───────────────────────────────────────
   useEffect(() => {
     const el = wrapRef.current; if (!el) return
 
@@ -209,12 +246,10 @@ export default function MiCasaScreenViewer({ screens }) {
       const r  = ns / t.scale
       applyTx({ x: mx - r*(mx - t.x), y: my - r*(my - t.y), scale: ns })
     }
-
     function normalizeWheel(e) {
-      let raw = e.deltaMode === 1 ? -e.deltaY * 0.07 : e.deltaMode === 2 ? -e.deltaY * 1.2 : -e.deltaY * 0.006
+      const raw = e.deltaMode === 1 ? -e.deltaY * 0.07 : e.deltaMode === 2 ? -e.deltaY * 1.2 : -e.deltaY * 0.006
       return Math.sign(raw) * Math.min(Math.abs(raw), 0.3)
     }
-
     function onWheel(e) {
       if (!focusedRef.current) return
       e.preventDefault()
@@ -235,7 +270,6 @@ export default function MiCasaScreenViewer({ screens }) {
         pinchRef.current = { dist: Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY), mid: { x: (a.clientX+b.clientX)/2, y: (a.clientY+b.clientY)/2 } }
       }
     }
-
     function onTouchMove(e) {
       if (e.touches.length === 1) {
         const t = e.touches[0], dx = t.clientX - panRef.current.sx, dy = t.clientY - panRef.current.sy
@@ -269,42 +303,51 @@ export default function MiCasaScreenViewer({ screens }) {
     }
   }, [applyTx])
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const onKey = e => {
-      if (!focusedRef.current) return
-      if (e.key === 'v' || e.key === 'V') setTool('select')
-      if (e.key === 'h' || e.key === 'H') setTool('hand')
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [])
-
+  // ── Mouse/pen pointer handlers ────────────────────────────────────────
+  // Root cause of prior bug: setPointerCapture re-targets click to the canvas,
+  // so the frame's onClick never fired. Selection is now handled in onPointerUp.
   function onPointerDown(e) {
     if (e.pointerType === 'touch') return
     focusedRef.current = true
-    justPannedRef.current = false
-    if (toolRef.current === 'hand') {
-      panRef.current = { active: true, sx: e.clientX, sy: e.clientY, ox: txRef.current.x, oy: txRef.current.y }
-      e.currentTarget.setPointerCapture(e.pointerId)
-    }
+    draggedRef.current = false
+    pointerDownTarget.current = e.target
+    panRef.current = { active: true, sx: e.clientX, sy: e.clientY, ox: txRef.current.x, oy: txRef.current.y }
+    e.currentTarget.setPointerCapture(e.pointerId)
   }
   function onPointerMove(e) {
-    if (e.pointerType === 'touch' || !panRef.current.active || toolRef.current !== 'hand') return
+    if (e.pointerType === 'touch' || !panRef.current.active) return
     const dx = e.clientX - panRef.current.sx, dy = e.clientY - panRef.current.sy
-    if (Math.hypot(dx, dy) > 4) justPannedRef.current = true
-    applyTx({ x: panRef.current.ox + dx, y: panRef.current.oy + dy, scale: txRef.current.scale })
+    if (Math.hypot(dx, dy) > 6) {
+      draggedRef.current = true
+      applyTx({ x: panRef.current.ox + dx, y: panRef.current.oy + dy, scale: txRef.current.scale })
+    }
   }
-  function onPointerUp() { panRef.current = { ...panRef.current, active: false } }
-  function onCanvasClick() { if (!justPannedRef.current) { setSelectedId(null); setSheetOpen(false) } }
-  function selectScreen(id) { setSelectedId(id); setSheetOpen(true) }
+  function onPointerUp(e) {
+    if (e.pointerType === 'touch') return
+    panRef.current = { ...panRef.current, active: false }
+    if (draggedRef.current) return  // was a pan, not a click
 
+    const frameEl = pointerDownTarget.current?.closest?.('[data-screen-id]')
+    if (frameEl) {
+      selectScreen(frameEl.dataset.screenId)
+    } else {
+      // Click on empty canvas → deselect
+      setSelectedId(null)
+      setSheetOpen(false)
+    }
+  }
+
+  // ── Fullscreen entry ──────────────────────────────────────────────────
   async function openFullscreen(screenId) {
     prevPanel.current = panelOpen
     setPanelOpen(false)
     try {
       if (!isFull()) await requestFull(mcvRef.current)
-      if (screenId) setTimeout(() => { selectScreen(screenId); zoomToScreen(screenId) }, 160)
+      if (screenId) setTimeout(() => {
+        setSelectedId(screenId)
+        setSheetOpen(true)
+        zoomToScreen(screenId)
+      }, 160)
     } catch { setPanelOpen(prevPanel.current) }
   }
 
@@ -316,17 +359,16 @@ export default function MiCasaScreenViewer({ screens }) {
       {/* ── Top bar ─────────────────────────────────── */}
       <div className="mcv__bar">
         <div className="mcv__bar-left">
-          {/* Panel toggle — desktop only */}
-          <button className="mcv__tool mcv__tool--toggle" onClick={() => setPanelOpen(p => !p)} aria-label={panelOpen ? 'Collapse panel' : 'Expand panel'} title={panelOpen ? 'Collapse panel' : 'Expand panel'}>
+          <button
+            className="mcv__tool mcv__tool--toggle"
+            onClick={() => setPanelOpen(p => !p)}
+            aria-label={panelOpen ? 'Collapse panel' : 'Expand panel'}
+            title={panelOpen ? 'Collapse panel' : 'Expand panel'}
+          >
             <IconPanel />
           </button>
-          <div className="mcv__tools">
-            <button className={`mcv__tool${tool === 'select' ? ' mcv__tool--on' : ''}`} onClick={() => setTool('select')} aria-pressed={tool === 'select'} aria-label="Select (V)" title="Select (V)"><IconSelect /></button>
-            <button className={`mcv__tool${tool === 'hand' ? ' mcv__tool--on' : ''}`}   onClick={() => setTool('hand')}   aria-pressed={tool === 'hand'}   aria-label="Hand (H)"   title="Hand (H)"><IconHand /></button>
-          </div>
         </div>
 
-        {/* Breadcrumb title */}
         <span className="mcv__title">
           MiCasa screens
           {isFullscr && selectedScreen && <><span className="mcv__title-sep"> / </span>{selectedScreen.name}</>}
@@ -334,8 +376,6 @@ export default function MiCasaScreenViewer({ screens }) {
 
         <div className="mcv__bar-right">
           <span className="mcv__zoom" ref={zoomRef}>100%</span>
-
-          {/* Full screen button — always visible and active */}
           <button
             className={`mcv__fs-btn${isFullscr ? ' mcv__fs-btn--exit' : ''}`}
             onClick={isFullscr ? () => exitFull() : () => openFullscreen(selectedId)}
@@ -351,10 +391,13 @@ export default function MiCasaScreenViewer({ screens }) {
       {/* ── Body ────────────────────────────────────── */}
       <div className="mcv__body">
 
-        {/* Left panel — desktop only, hidden in fullscreen via CSS */}
-        <aside className={`mcv__panel${panelOpen ? '' : ' mcv__panel--collapsed'}`} aria-label="Screens and properties" aria-hidden={!panelOpen}>
-
-          {/* Screens section */}
+        {/* Left panel */}
+        <aside
+          ref={panelRef}
+          className={`mcv__panel${panelOpen ? '' : ' mcv__panel--collapsed'}`}
+          aria-label="Screens and properties"
+          aria-hidden={!panelOpen}
+        >
           <div className="mcv__panel-head">
             <span className="mcv__panel-sec">Screens</span>
             <span className="mcv__panel-count">{screens.length}</span>
@@ -375,7 +418,6 @@ export default function MiCasaScreenViewer({ screens }) {
             ))}
           </ul>
 
-          {/* Properties section */}
           <div className="mcv__panel-head mcv__panel-head--props">
             <span className="mcv__panel-sec">Properties</span>
           </div>
@@ -387,13 +429,12 @@ export default function MiCasaScreenViewer({ screens }) {
         {/* Canvas */}
         <div
           ref={wrapRef}
-          className={`mcv__canvas mcv__canvas--${tool}`}
+          className="mcv__canvas"
           tabIndex={0}
-          aria-label="Screen canvas — scroll to zoom, drag to pan, V/H to switch tools"
+          aria-label="Screen canvas — scroll to zoom, drag to pan"
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
-          onClick={onCanvasClick}
           onFocus={() => { focusedRef.current = true }}
           onBlur={() => { focusedRef.current = false }}
         >
@@ -404,8 +445,18 @@ export default function MiCasaScreenViewer({ screens }) {
                 screen={s}
                 pos={positions[s.id] ?? s.canvas}
                 selected={selectedId === s.id}
-                onClick={e => { e.stopPropagation(); if (!touchMovRef.current && !justPannedRef.current) selectScreen(s.id) }}
-                onDblClick={e => { e.stopPropagation(); if (isFull()) { selectScreen(s.id); zoomToScreen(s.id) } else openFullscreen(s.id) }}
+                onTouchTap={e => {
+                  // Only runs for touch (mouse clicks are handled by onPointerUp)
+                  e.stopPropagation()
+                  if (!touchMovRef.current) {
+                    const sheetH = window.innerWidth < MOBILE_BP ? window.innerHeight * 0.45 : 0
+                    selectScreen(s.id, sheetH)
+                  }
+                }}
+                onDblClick={e => {
+                  e.stopPropagation()
+                  if (isFull()) { setSelectedId(s.id); zoomToScreen(s.id) } else openFullscreen(s.id)
+                }}
               />
             ))}
           </div>
