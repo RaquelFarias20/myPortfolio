@@ -4,8 +4,8 @@ export const micasaScreens = [
     name: "01 · Home",
     subtitle: "Where do you want to start?",
     kind: "desktop",
-    image: "/images/MiCasa-Desktop_Home.png",
-    image2x: "/images/MiCasa-Desktop_Home@2x.png",
+    image: "/images/MiCasa-Desktop_Home@2x.png",
+    image2x: null,
     width: 1440,
     height: 1025,
     description:
